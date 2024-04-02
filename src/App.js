@@ -1,10 +1,17 @@
-import { Button } from '@mui/material';
+
+import { Header } from 'components/Header/Header';
 import './App.css';
 import React from 'react';
+import { Container } from '@mui/material';
 
 function App() {
   return (
-    <Button variant="contained">Hello world</Button>
+    <>
+      <Header />
+      <Container>
+        text
+      </Container>
+    </>
   );
 }
 
