@@ -1,27 +1,33 @@
-import { Button, Card, CardContent, CardMedia, Typography } from '@mui/material'
+/* eslint-disable react/prop-types */
+import { Box, Button, Card, CardContent, CardMedia, Grid, Typography } from '@mui/material'
 import React from 'react'
-export default function CardItem() {
+export default function CardItem({ title, price, image }) {
     return (
-        <>
-            <Card sx={{ maxWidth: 'auto' }} elevation={4}>
-                <CardMedia
-                    component="img"
-                    height="194"
-                    image="https://img.freepik.com/free-vector/modern-hosting-concept-with-flat-design_23-2147985997.jpg?w=740&t=st=1712128359~exp=1712128959~hmac=7112243f3f40934d080dc854854b778e300803e12509e2b126cbab405643d79d"
-                    alt="Paella dish"
-                />
+        <Grid item lg={3} md={4} xs={6}>
+            <Card sx={{ maxWidth: 'auto', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }} elevation={4}>
+                <Box>
+                    <CardMedia
+                        component="img"
+                        height="194"
+                        image={image}
+                        alt={title}
+                        sx={{ objectFit: 'contain' }}
+                    />
+                    <CardContent sx={{ display: 'flex', flexDirection: 'column' }}>
+                        <Typography variant='body1'>
+                            {title}
+                        </Typography>
+                        <Typography variant='h5' component={'span'} sx={{ fontWeight: '700' }}>
+                            {price}$
+                        </Typography>
+                    </CardContent>
+                </Box>
                 <CardContent sx={{ display: 'flex', flexDirection: 'column' }}>
-                    <Typography variant='body1'>
-                        Title
-                    </Typography>
-                    <Typography variant='h6' component={'span'}>
-                        Price
-                    </Typography>
                     <Button variant='contained' size='medium'>
-                            В корзину
+                        В корзину
                     </Button>
                 </CardContent>
             </Card>
-        </>
+        </Grid>
     )
 }
