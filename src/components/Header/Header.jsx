@@ -1,26 +1,53 @@
-import React, { useState } from 'react'
-import { AppBar, Box, Button, Container, Divider, Drawer, List, ListItem, ListItemButton, ListItemText, Toolbar, Typography } from '@mui/material';
+import React, { useEffect, useState } from 'react'
+import { AppBar, Box, Button, Container, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemText, Toolbar, Typography } from '@mui/material';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import MenuIcon from '@mui/icons-material/Menu';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchCategories, fetchProductsInCategory } from 'reducers/products/productsSlice';
+import CloseIcon from '@mui/icons-material/Close';
 
 export const Header = () => {
+  const dispatch = useDispatch();
+  // @ts-ignore
+  const categories = useSelector(state => state.products.categories);
+
   const [open, setOpen] = useState(false);
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
   };
 
+  useEffect(() => {
+    // @ts-ignore
+    dispatch(fetchCategories);
+  }, []);
+
+  const onClickCategory = (category) => {
+    // @ts-ignore
+    dispatch(fetchProductsInCategory(category));
+  }
+
   const DrawerList = (
     <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
       <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text) => (
+        <ListItem>
+          <Box width='100%' display='flex' justifyContent='space-between' alignItems='center'>
+          <Typography variant='h6' component='span'>
+            Категории
+          </Typography>
+          <IconButton aria-label="delete">
+            <CloseIcon />
+          </IconButton>
+          </Box>
+        </ListItem>
+        {categories.map((category) => (
           <>
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemText primary={text} />
+            <ListItem key={category} disablePadding>
+              <ListItemButton onClick={() => onClickCategory(category)}>
+                <ListItemText primary={category} />
               </ListItemButton>
             </ListItem>
-            <Divider  sx={{margin: '0 15px'}}/>
+            <Divider sx={{ margin: '0 15px' }} />
           </>
         ))}
       </List>
