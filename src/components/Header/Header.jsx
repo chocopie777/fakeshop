@@ -33,7 +33,7 @@ export const Header = () => {
         <ListItem>
           <Box width='100%' display='flex' justifyContent='space-between' alignItems='center'>
           <Typography variant='h6' component='span'>
-            Категории
+            Каталог
           </Typography>
           <IconButton aria-label="delete">
             <CloseIcon />
@@ -64,12 +64,12 @@ export const Header = () => {
                 <ShoppingBagIcon sx={{ marginRight: 1 }} />
                 Fake Shop
                 <Button onClick={toggleDrawer(true)} variant="outlined" sx={{
-                  marginLeft: '20px', border: '1px solid #fff', color: '#fff', ":hover": {
+                  marginLeft: '20px', border: '1px solid #fff', color: '#fff', textTransform: 'capitalize', ":hover": {
                     background: '#000', border: '1px solid #000',
                   }
                 }}>
                   <MenuIcon sx={{ marginRight: '10px' }} />
-                  Категории
+                  Каталог
                 </Button>
                 <Drawer open={open} onClose={toggleDrawer(false)}>
                   {DrawerList}
