@@ -25,25 +25,22 @@ export default function productsReducer(state = initialState, action) {
     }
 }
 
-export async function fetchProducts(dispatch, getState) {
+export async function fetchProducts(dispatch) {
     const response = await fetch('https://fakestoreapi.com/products');
     const json = await response.json();
     dispatch({ type: 'products/getProducts', payload: json });
-    console.log(getState());
 }
 
-export async function fetchCategories(dispatch, getState) {
+export async function fetchCategories(dispatch) {
     const response = await fetch('https://fakestoreapi.com/products/categories');
     const json = await response.json();
-    dispatch({type: 'products/getCategories', payload: json});
-    console.log(getState());
+    dispatch({ type: 'products/getCategories', payload: json });
 }
 
 export function fetchProductsInCategory(category) {
-    return async function fetchProductsInCategoryThunk(dispatch, getState) {
+    return async function fetchProductsInCategoryThunk(dispatch) {
         const response = await fetch('https://fakestoreapi.com/products/category/' + category);
         const json = await response.json();
-        dispatch({type: 'products/getProductsInCategory', payload: json});
-        console.log(getState());
+        dispatch({ type: 'products/getProductsInCategory', payload: json });
     }
-} 
+}

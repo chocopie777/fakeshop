@@ -5,6 +5,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCategories, fetchProductsInCategory } from 'reducers/products/productsSlice';
 import CloseIcon from '@mui/icons-material/Close';
+import { Link } from 'react-router-dom';
 
 export const Header = () => {
   const dispatch = useDispatch();
@@ -32,23 +33,23 @@ export const Header = () => {
       <List>
         <ListItem>
           <Box width='100%' display='flex' justifyContent='space-between' alignItems='center'>
-          <Typography variant='h6' component='span'>
-            Каталог
-          </Typography>
-          <IconButton aria-label="delete">
-            <CloseIcon />
-          </IconButton>
+            <Typography variant='h6' component='span'>
+              Каталог
+            </Typography>
+            <IconButton aria-label="delete">
+              <CloseIcon />
+            </IconButton>
           </Box>
         </ListItem>
         {categories.map((category) => (
-          <>
-            <ListItem key={category} disablePadding>
+          <div key={category}>
+            <ListItem disablePadding>
               <ListItemButton onClick={() => onClickCategory(category)}>
                 <ListItemText primary={category} />
               </ListItemButton>
             </ListItem>
             <Divider sx={{ margin: '0 15px' }} />
-          </>
+          </div>
         ))}
       </List>
     </Box>
@@ -61,8 +62,10 @@ export const Header = () => {
           <Toolbar>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <ShoppingBagIcon sx={{ marginRight: 1 }} />
-                Fake Shop
+                <Link to='/products' style={{textDecoration: 'none', color: '#fff', display: 'flex', alignItems: 'center'}}>
+                  <ShoppingBagIcon sx={{ marginRight: 1 }} />
+                  Fake Shop
+                </Link>
                 <Button onClick={toggleDrawer(true)} variant="outlined" sx={{
                   marginLeft: '20px', border: '1px solid #fff', color: '#fff', textTransform: 'capitalize', ":hover": {
                     background: '#000', border: '1px solid #000',
