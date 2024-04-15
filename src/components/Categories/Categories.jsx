@@ -29,7 +29,7 @@ export default function Categories() {
                             <Grid item lg={3} md={4} xs={6} key={category}>
                                 <Card variant="outlined" sx={{ ":hover": { transform: 'scale(1.06)', transition: '.1s' } }}>
                                     <Box position='relative'>
-                                        <Link to='/products' style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }} />
+                                        <Link to={'/products/categories/' + category} style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }} />
                                         <CardContent sx={{ textAlign: 'center' }}>
                                             <Typography>
                                                 {category}
