@@ -3,9 +3,22 @@ import React from 'react'
 import { useSelector } from 'react-redux';
 import Product from './Product/Product';
 
-export default function Products() {
+// eslint-disable-next-line react/prop-types
+export default function Products({ filterIndex }) {
     // @ts-ignore
-    const products = useSelector(state => state.products.products);
+    let products = useSelector(state => state.products.products);
+
+    switch (filterIndex) {
+        case 0:
+            products.sort((a, b) => {
+                return a.price - b.price;
+            })
+            break;
+        case 1:
+            products.sort((a, b) => {
+                return b.price - a.price;
+            })
+    }
 
     return (
         <>

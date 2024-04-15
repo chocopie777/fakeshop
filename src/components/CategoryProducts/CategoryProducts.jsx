@@ -1,12 +1,14 @@
-import { Box, Breadcrumbs, Button, Container, Link as LinkMUI, Typography } from '@mui/material';
+// @ts-nocheck
+import { Box, Breadcrumbs, Container, Link as LinkMUI, Typography } from '@mui/material';
 import Products from 'components/Products/Products'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import { fetchProductsInCategory } from 'reducers/products/productsSlice';
-import SortIcon from '@mui/icons-material/Sort';
+import Filter from 'components/Filter/Filter';
 
 export default function CategoryProducts() {
+    const [filterIndex, setFilterIndex] = useState(0);
     const dispatch = useDispatch();
     const { categoryId } = useParams();
 
@@ -31,15 +33,12 @@ export default function CategoryProducts() {
                     </LinkMUI>
                     <Typography color="text.primary">{categoryId}</Typography>
                 </Breadcrumbs>
-                <Button variant='text'>
-                    <SortIcon />
-                    Фильтр
-                </Button>
+               <Filter onClickItem={setFilterIndex} filterIndex={filterIndex}/>
             </Box>
             <Typography variant='h4' sx={{ marginBottom: '35px', fontWeight: '700', textTransform: 'capitalize' }}>
                 {categoryId}
             </Typography>
-            <Products />
+            <Products filterIndex={filterIndex}/>
         </Container>
     )
 }
