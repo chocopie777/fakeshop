@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from 'react'
-import { AppBar, Box, Button, Container, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemText, Toolbar, Typography } from '@mui/material';
+import { AppBar, Badge, Box, Button, Container, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemText, Toolbar, Typography } from '@mui/material';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCategories } from 'reducers/products/productsSlice';
 import CloseIcon from '@mui/icons-material/Close';
 import { Link } from 'react-router-dom';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { useLocalStorage } from 'hooks/useLocalStorage';
 
 export const Header = () => {
   const dispatch = useDispatch();
   // @ts-ignore
   const categories = useSelector(state => state.products.categories);
+  // @ts-ignore
+  const cartItems = useSelector(state => state.cart.cartItems);
+  const [cart] = useLocalStorage('cartItems', []);
 
   const [open, setOpen] = useState(false);
 
@@ -21,6 +26,7 @@ export const Header = () => {
   useEffect(() => {
     // @ts-ignore
     dispatch(fetchCategories);
+    dispatch({type: 'cart/cartUpdate', payload: cart});
   }, []);
 
   const DrawerList = (
@@ -53,7 +59,7 @@ export const Header = () => {
   );
 
   return (
-    <header>
+    <header style={{position: 'sticky', top: 0, zIndex: 999}}>
       <AppBar position="static">
         <Container>
           <Toolbar>
@@ -76,6 +82,14 @@ export const Header = () => {
                 </Drawer>
               </Box>
             </Typography>
+            <Link to='cart' style={{ textDecoration: 'none', color: 'inherit' }}>
+              <Box display='flex' flexDirection='column' alignItems='center'>
+                <Badge badgeContent={cartItems.length} color="error">
+                  <ShoppingCartIcon fontSize='medium' />
+                </Badge>
+                <Typography variant='body2'>Корзина</Typography>
+              </Box>
+            </Link>
           </Toolbar>
         </Container>
       </AppBar>

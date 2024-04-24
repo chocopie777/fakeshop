@@ -1,4 +1,5 @@
 import { Box } from '@mui/material'
+import CheckoutSnackbar from 'components/CheckoutSnackbar/CheckoutSnackbar'
 import Footer from 'components/Footer/Footer'
 import { Header } from 'components/Header/Header'
 import React from 'react'
@@ -11,6 +12,7 @@ export default function Layout() {
             <main style={{ flexGrow: 1, display: 'flex' }}>
                 <Outlet />
             </main>
+            <CheckoutSnackbar />
             <Footer />
         </Box>
     )

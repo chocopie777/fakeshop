@@ -1,12 +1,22 @@
 import { Grid } from '@mui/material';
-import React from 'react'
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import Product from './Product/Product';
+import { useLocalStorage } from 'hooks/useLocalStorage';
 
 // eslint-disable-next-line react/prop-types
 export default function Products({ filterIndex }) {
+
+    const [cart, setCart] = useLocalStorage('cartItems', []);
+
     // @ts-ignore
     let products = useSelector(state => state.products.products);
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch({type: 'cart/cartUpdate', payload: cart});
+    }, [cart]);
 
     switch (filterIndex) {
         case 0:
@@ -28,7 +38,9 @@ export default function Products({ filterIndex }) {
                         id={product.id}
                         title={product.title}
                         price={product.price}
-                        image={product.image} />
+                        image={product.image}
+                        onAddInCart={setCart}
+                        cart={cart} />
                 )}
             </Grid>
         </>

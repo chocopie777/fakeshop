@@ -1,9 +1,24 @@
 /* eslint-disable react/prop-types */
 import { Box, Button, Card, CardContent, CardMedia, Grid, Typography } from '@mui/material'
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useState } from 'react';
 import { Link } from 'react-router-dom'
-export default function Product({ id, title, price, image }) {
-    // @ts-ignore
+
+export default function Product({ id, title, price, image, onAddInCart, cart }) {
+    const [isInCart, setIsInCart] = useState(false);
+
+    const handleClickOnCart = () => {
+        onAddInCart([...cart, { id: id, quantity: 1, checked: true }]);
+    }
+
+    useEffect(() => {
+        for (let item of cart) {
+            if (item.id === id) {
+                setIsInCart(true);
+            }
+        }
+    }, [cart]);
+
     return (
         <Grid item lg={3} md={4} xs={6}>
             <Card sx={{
@@ -37,9 +52,29 @@ export default function Product({ id, title, price, image }) {
                     </CardContent>
                 </Box>
                 <CardContent sx={{ display: 'flex', flexDirection: 'column' }}>
-                    <Button variant='contained' size='medium' sx={{ position: 'relative', zIndex: 1 }}>
-                        В корзину
-                    </Button>
+                    {
+                        isInCart
+                            ?
+                            <Link to={'/cart'} style={{textDecoration: 'none'}}>
+                                <Button
+                                    component='div'
+                                    variant='outlined'
+                                    size='medium'
+                                    sx={{ position: 'relative', zIndex: 1, display: 'flex' }}
+                                    onClick={() => { handleClickOnCart() }}>
+                                    В корзине
+                                </Button>
+                            </Link>
+                            :
+                            <Button
+                                component='div'
+                                variant='contained'
+                                size='medium'
+                                sx={{ position: 'relative', zIndex: 1 }}
+                                onClick={() => { handleClickOnCart() }}>
+                                В корзину
+                            </Button>
+                    }
                 </CardContent>
             </Card>
         </Grid>

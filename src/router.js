@@ -1,4 +1,5 @@
 import AllProducts from "components/AllProducts/AllProducts";
+import Cart from "components/Cart/Cart";
 import Categories from "components/Categories/Categories";
 import CategoryProducts from "components/CategoryProducts/CategoryProducts";
 import ErrorPage from "components/ErrorPage/ErrorPage";
@@ -15,6 +16,7 @@ const router = createBrowserRouter(
             <Route path='products/:productId' element={<SingleProduct />} />
             <Route path='products/categories' element={<Categories />} />
             <Route path='products/categories/:categoryId' element={<CategoryProducts />} />
+            <Route path='cart' element={<Cart />} />
         </Route>
     )
 )

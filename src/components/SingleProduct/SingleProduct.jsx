@@ -1,10 +1,15 @@
 import { Box, Breadcrumbs, Button, Container, Link as LinkMUI, Paper, Stack, Typography } from '@mui/material'
+import { useLocalStorage } from 'hooks/useLocalStorage';
 import React, { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 
 export default function SingleProduct() {
   const [product, setProduct] = useState({});
   const params = useParams();
+  const [cart, setCart] = useLocalStorage('cartItems', []);
+  const dispatch = useDispatch();
+  const [isInCart, setIsInCart] = useState(false);
 
   useEffect(() => {
     async function fetchSingleProduct() {
@@ -14,6 +19,21 @@ export default function SingleProduct() {
     }
     fetchSingleProduct();
   }, []);
+
+  useEffect(() => {
+    dispatch({ type: 'cart/cartUpdate', payload: cart });
+
+    for (let item of cart) {
+      if (item.id == params.productId) {
+        setIsInCart(true);
+      }
+    }
+  }, [cart]);
+
+  const handleClickOnCart = () => {
+    // @ts-ignore
+    setCart([...cart, { id: product.id, quantity: 1, checked: true }]);
+  }
 
   return (
     <Container maxWidth='lg' sx={{ padding: '25px 0' }}>
@@ -60,7 +80,26 @@ export default function SingleProduct() {
               </Typography>
             </Paper>
             <Box>
-              <Button variant='contained' sx={{ height: '100%', paddingLeft: 5, paddingRight: 5, textTransform: 'capitalize' }}>В Корзину</Button>
+              {
+                isInCart
+                  ?
+                  <Link to={'/cart'} style={{ textDecoration: 'none' }}>
+                    <Button
+                      component='div'
+                      variant='outlined'
+                      sx={{ height: '100%', paddingLeft: 5, paddingRight: 5, textTransform: 'capitalize' }}>
+                      В Корзине
+                    </Button>
+                  </Link>
+                  :
+                  <Button
+                    component='div'
+                    variant='contained'
+                    sx={{ height: '100%', paddingLeft: 5, paddingRight: 5, textTransform: 'capitalize' }}
+                    onClick={handleClickOnCart}>
+                    В Корзину
+                  </Button>
+              }
             </Box>
           </Stack>
         </Box>
