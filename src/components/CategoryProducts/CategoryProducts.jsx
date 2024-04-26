@@ -4,7 +4,7 @@ import Products from 'components/Products/Products'
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
-import { fetchProductsInCategory } from 'reducers/products/productsSlice';
+import { fetchProductsInCategory } from 'reducers/productsSlice';
 import Filter from 'components/Filter/Filter';
 
 export default function CategoryProducts() {

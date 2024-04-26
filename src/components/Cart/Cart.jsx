@@ -3,7 +3,7 @@ import { Box, Button, Checkbox, Container, FormControlLabel, Paper, Stack, Typog
 import React, { useEffect, useState } from 'react'
 import CartItem from './CartItem/CartItem'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchProducts } from 'reducers/products/productsSlice';
+import { fetchProducts } from 'reducers/productsSlice';
 import { useLocalStorage } from 'hooks/useLocalStorage';
 import { Link } from "react-router-dom";
 import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';

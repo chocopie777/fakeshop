@@ -2,7 +2,7 @@ import { Box, Breadcrumbs, Container, Typography } from '@mui/material';
 import Products from 'components/Products/Products'
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
-import { fetchProducts } from 'reducers/products/productsSlice';
+import { fetchProducts } from 'reducers/productsSlice';
 import Filter from 'components/Filter/Filter';
 
 export default function AllProducts() {

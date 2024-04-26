@@ -8,14 +8,15 @@ import { useLocalStorage } from 'hooks/useLocalStorage';
 export default function Products({ filterIndex }) {
 
     const [cart, setCart] = useLocalStorage('cartItems', []);
-
+    // @ts-ignore
+    const loadingStatus = useSelector(state => state.products.status);
     // @ts-ignore
     let products = useSelector(state => state.products.products);
 
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch({type: 'cart/cartUpdate', payload: cart});
+        dispatch({ type: 'cart/cartUpdate', payload: cart });
     }, [cart]);
 
     switch (filterIndex) {
@@ -33,15 +34,32 @@ export default function Products({ filterIndex }) {
     return (
         <>
             <Grid container columnSpacing={3} rowSpacing={3}>
-                {products.map(product =>
-                    <Product key={product.id}
-                        id={product.id}
-                        title={product.title}
-                        price={product.price}
-                        image={product.image}
-                        onAddInCart={setCart}
-                        cart={cart} />
-                )}
+                {
+                    loadingStatus === 'loading'
+                        ?
+                        [...Array(8)].map((item, index) =>
+                            <Product key={index}
+                                id=''
+                                title=''
+                                price=''
+                                image=''
+                                onAddInCart=''
+                                cart=''
+                                loading={true} />
+                        )
+                        :
+                        products.map(product =>
+                            <Product key={product.id}
+                                id={product.id}
+                                title={product.title}
+                                price={product.price}
+                                image={product.image}
+                                onAddInCart={setCart}
+                                cart={cart}
+                                loading={false} />
+                        )
+
+                }
             </Grid>
         </>
     )

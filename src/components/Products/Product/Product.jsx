@@ -1,10 +1,10 @@
 /* eslint-disable react/prop-types */
-import { Box, Button, Card, CardContent, CardMedia, Grid, Typography } from '@mui/material'
+import { Box, Button, Card, CardContent, CardMedia, Grid, Skeleton, Typography } from '@mui/material'
 import React, { useEffect } from 'react'
 import { useState } from 'react';
 import { Link } from 'react-router-dom'
 
-export default function Product({ id, title, price, image, onAddInCart, cart }) {
+export default function Product({ id, title, price, image, onAddInCart, cart, loading }) {
     const [isInCart, setIsInCart] = useState(false);
 
     const handleClickOnCart = () => {
@@ -35,45 +35,67 @@ export default function Product({ id, title, price, image, onAddInCart, cart }) 
             }} elevation={4}>
                 <Link to={`/products/${id}`} style={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }} />
                 <Box>
-                    <CardMedia
-                        component="img"
-                        height="194"
-                        image={image}
-                        alt={title}
-                        sx={{ objectFit: 'contain' }}
-                    />
+                    {
+                        loading
+                            ?
+                            <Skeleton variant="rectangular" width='100%' height={194} />
+                            :
+                            <CardMedia
+                                component="img"
+                                height="194"
+                                image={image}
+                                alt={title}
+                                sx={{ objectFit: 'contain' }}
+                            />
+                    }
                     <CardContent sx={{ display: 'flex', flexDirection: 'column' }}>
                         <Typography variant='body1' sx={{ position: 'relative', zIndex: 1 }}>
-                            {title}
+                            {
+                                loading
+                                    ?
+                                    <Skeleton />
+                                    :
+                                    title
+                            }
                         </Typography>
                         <Typography variant='h5' component={'span'} sx={{ fontWeight: '700' }}>
-                            {price}$
+                            {
+                                loading
+                                    ?
+                                    <Skeleton />
+                                    :
+                                    price + '$'
+                            }
                         </Typography>
                     </CardContent>
                 </Box>
                 <CardContent sx={{ display: 'flex', flexDirection: 'column' }}>
                     {
-                        isInCart
+                        loading
                             ?
-                            <Link to={'/cart'} style={{textDecoration: 'none'}}>
+                            <Skeleton height={64}/>
+                            :
+                            isInCart
+                                ?
+                                <Link to={'/cart'} style={{ textDecoration: 'none' }}>
+                                    <Button
+                                        component='div'
+                                        variant='outlined'
+                                        size='medium'
+                                        sx={{ position: 'relative', zIndex: 1, display: 'flex' }}
+                                        onClick={() => { handleClickOnCart() }}>
+                                        В корзине
+                                    </Button>
+                                </Link>
+                                :
                                 <Button
                                     component='div'
-                                    variant='outlined'
+                                    variant='contained'
                                     size='medium'
-                                    sx={{ position: 'relative', zIndex: 1, display: 'flex' }}
+                                    sx={{ position: 'relative', zIndex: 1 }}
                                     onClick={() => { handleClickOnCart() }}>
-                                    В корзине
+                                    В корзину
                                 </Button>
-                            </Link>
-                            :
-                            <Button
-                                component='div'
-                                variant='contained'
-                                size='medium'
-                                sx={{ position: 'relative', zIndex: 1 }}
-                                onClick={() => { handleClickOnCart() }}>
-                                В корзину
-                            </Button>
                     }
                 </CardContent>
             </Card>

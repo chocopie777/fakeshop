@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 export default function Categories() {
 
     // @ts-ignore
-    const categories = useSelector(state => state.products.categories);
+    const categories = useSelector(state => state.categories.categories);
 
     return (
         <Container maxWidth='lg' sx={{ padding: '25px 0' }}>

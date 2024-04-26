@@ -1,23 +1,19 @@
 let initialState = {
     products: [],
-    categories: [],
+    status: 'idle',
 };
 
 export default function productsReducer(state = initialState, action) {
     switch (action.type) {
-        case 'products/getProducts':
+        case 'products/productsLoading':
             return {
                 ...state,
-                products: action.payload,
+                status: 'loading'
             }
-        case 'products/getCategories':
+        case 'products/productsLoaded':
             return {
                 ...state,
-                categories: action.payload,
-            }
-        case 'products/getProductsInCategory':
-            return {
-                ...state,
+                status: 'idle',
                 products: action.payload,
             }
         default:
@@ -26,21 +22,17 @@ export default function productsReducer(state = initialState, action) {
 }
 
 export async function fetchProducts(dispatch) {
+    dispatch({ type: 'products/productsLoading' });
     const response = await fetch('https://fakestoreapi.com/products');
     const json = await response.json();
-    dispatch({ type: 'products/getProducts', payload: json });
-}
-
-export async function fetchCategories(dispatch) {
-    const response = await fetch('https://fakestoreapi.com/products/categories');
-    const json = await response.json();
-    dispatch({ type: 'products/getCategories', payload: json });
+    dispatch({ type: 'products/productsLoaded', payload: json });
 }
 
 export function fetchProductsInCategory(category) {
     return async function fetchProductsInCategoryThunk(dispatch) {
+        dispatch({ type: 'products/productsLoading' });
         const response = await fetch('https://fakestoreapi.com/products/category/' + category);
         const json = await response.json();
-        dispatch({ type: 'products/getProductsInCategory', payload: json });
+        dispatch({ type: 'products/productsLoaded', payload: json });
     }
 }

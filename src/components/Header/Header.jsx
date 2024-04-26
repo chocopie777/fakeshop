@@ -3,16 +3,16 @@ import { AppBar, Badge, Box, Button, Container, Divider, Drawer, IconButton, Lis
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchCategories } from 'reducers/products/productsSlice';
 import CloseIcon from '@mui/icons-material/Close';
 import { Link } from 'react-router-dom';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useLocalStorage } from 'hooks/useLocalStorage';
+import { fetchCategories } from 'reducers/categoriesSlice';
 
 export const Header = () => {
   const dispatch = useDispatch();
   // @ts-ignore
-  const categories = useSelector(state => state.products.categories);
+  const categories = useSelector(state => state.categories.categories);
   // @ts-ignore
   const cartItems = useSelector(state => state.cart.cartItems);
   const [cart] = useLocalStorage('cartItems', []);
