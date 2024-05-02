@@ -23,7 +23,7 @@ export default function Filter({ onClickItem, filterIndex }) {
 
     return (
         <>
-            <Button variant='text' onClick={handleOpen} sx={{ textTransform: 'lowercase' }}>
+            <Button variant='text' onClick={handleOpen} sx={{ textTransform: 'lowercase', alignSelf: 'flex-start', marginLeft: {xs: -1, sm: 0}, marginTop: {xs: 1, sm: 0}}} >
                 <SortIcon />
                 {filterNames[filterIndex]}
             </Button>

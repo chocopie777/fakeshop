@@ -1,4 +1,4 @@
-import { Box, Breadcrumbs, Card, CardContent, Container, Grid, Typography } from '@mui/material'
+import { Box, Breadcrumbs, Card, CardContent, Grid, Typography } from '@mui/material'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Link as LinkMUI } from '@mui/material';
@@ -10,9 +10,11 @@ export default function Categories() {
     const categories = useSelector(state => state.categories.categories);
 
     return (
-        <Container maxWidth='lg' sx={{ padding: '25px 0' }}>
+        <>
             <Box>
-                <Breadcrumbs aria-label="breadcrumb">
+                <Breadcrumbs
+                    aria-label="breadcrumb"
+                    sx={{ overflowX: 'auto', '& .MuiBreadcrumbs-ol': { flexWrap: 'nowrap' } }}>
                     <LinkMUI underline="hover" color="inherit" component='div'>
                         <Link to='/products' style={{ textDecoration: 'none', color: 'inherit' }}>
                             Главная
@@ -42,6 +44,6 @@ export default function Categories() {
                     </Grid>
                 </Box>
             </Box>
-        </Container>
+        </>
     )
 }

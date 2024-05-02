@@ -1,4 +1,4 @@
-import { Box, Breadcrumbs, Container, Typography } from '@mui/material';
+import { Box, Breadcrumbs, Typography } from '@mui/material';
 import Products from 'components/Products/Products'
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
@@ -16,14 +16,14 @@ export default function AllProducts() {
 
 
     return (
-        <Container maxWidth='lg' sx={{ paddingTop: '25px', paddingBottom: '25px' }}>
-            <Box display='flex' justifyContent='space-between' sx={{ marginBottom: '25px' }}>
-                <Breadcrumbs aria-label="breadcrumb">
+        <>
+            <Box display='flex' justifyContent={{xs: 'flex-start', sm: 'space-between'}} sx={{ marginBottom: '25px' }} flexDirection={{xs: 'column', sm: 'row'}}>
+                <Breadcrumbs aria-label="breadcrumb" sx={{overflowX: 'auto', '& .MuiBreadcrumbs-ol': {flexWrap: 'nowrap'}}}>
                     <Typography color="text.primary">Главная</Typography>
                 </Breadcrumbs>
                 <Filter onClickItem={setFilterIndex} filterIndex={filterIndex}/>
             </Box>
             <Products filterIndex={filterIndex}/>
-        </Container>
+        </>
     )
 }

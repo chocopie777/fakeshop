@@ -82,7 +82,7 @@ export default function CartItem({ data, cart, onChangeCart }) {
     }
 
     return (
-        <Paper elevation={5} sx={{ display: 'flex', padding: '25px', justifyContent: 'space-between' }}>
+        <Paper elevation={5} sx={{ display: 'flex', padding: '25px', justifyContent: 'space-between', flexGrow: 1 }}>
             <Box display='flex'>
                 <Box display='flex' alignItems='center'>
                     <Checkbox checked={getCheckboxStatus()} onClick={handleClickCheckbox} />

@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { Box, Button, Checkbox, Container, FormControlLabel, Paper, Stack, Typography } from '@mui/material'
+import { Box, Button, Checkbox, FormControlLabel, Paper, Stack, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import CartItem from './CartItem/CartItem'
 import { useDispatch, useSelector } from 'react-redux'
@@ -106,7 +106,7 @@ export default function Cart() {
     }
 
     return (
-        <Container maxWidth='lg' sx={{ paddingTop: '25px', paddingBottom: '25px' }}>
+        <>
             <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '35px' }}>
                 <Typography variant='h4'
                     sx={{ fontWeight: '700', textTransform: 'capitalize' }}>
@@ -119,8 +119,8 @@ export default function Cart() {
             </Box>
             {cartItems.length > 0
                 ?
-                <Stack direction='row' spacing={2} alignItems='flex-start'>
-                    <Stack spacing={2} sx={{ flexGrow: 1 }}>
+                <Stack direction={{xs: 'column', md: 'row'}} spacing={2} alignItems='flex-start'>
+                    <Stack spacing={2} width='100%'>
                         <Paper elevation={5} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '5px 25px' }}>
                             <FormControlLabel control={<Checkbox checked={isCheckboxSelectAll} onClick={handleCheckboxSelectAll} />} label="Выбрать все" />
                             <Box>
@@ -131,7 +131,7 @@ export default function Cart() {
                             return <CartItem key={cartItem.id} data={cartItem} cart={cart} onChangeCart={setCart} />
                         })}
                     </Stack>
-                    <Paper elevation={5} sx={{ maxWidth: '300px', width: '100%', padding: '15px', position: 'sticky', top: 64 }}>
+                    <Paper elevation={5} sx={{ maxWidth: {xs: 'auto', md: '300px'}, width: '100%', padding: '15px', position: 'sticky', top: 64 }}>
                         {
                             getTotalQuantity() > 0
                                 ?
@@ -187,6 +187,6 @@ export default function Cart() {
                     openDialog={openDialog}
                     onClickDelete={handleClickDelete} />
             }
-        </Container>
+        </>
     )
 }
