@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { Box, Button, Checkbox, IconButton, Paper, Typography } from '@mui/material'
+import { Box, Button, Checkbox, FormControlLabel, IconButton, Paper, Typography, useMediaQuery, useTheme } from '@mui/material'
 import React from 'react'
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
@@ -11,6 +11,8 @@ import { useState } from 'react';
 // eslint-disable-next-line react/prop-types
 export default function CartItem({ data, cart, onChangeCart }) {
     const [openDialog, setOpenDialog] = useState(false);
+    const theme = useTheme();
+    const mediaQuerySM = useMediaQuery(theme.breakpoints.up('sm'));
 
     const handleClickPlus = () => {
         const nextCart = cart.map((item) => {
@@ -82,13 +84,13 @@ export default function CartItem({ data, cart, onChangeCart }) {
     }
 
     return (
-        <Paper elevation={5} sx={{ display: 'flex', padding: '25px', justifyContent: 'space-between', flexGrow: 1 }}>
+        <Paper elevation={5} sx={{ display: 'flex', padding: { xs: '10px', sm: '25px' }, justifyContent: 'space-between', flexGrow: 1 }}>
             <Box display='flex'>
                 <Box display='flex' alignItems='center'>
-                    <Checkbox checked={getCheckboxStatus()} onClick={handleClickCheckbox} />
+                    <FormControlLabel control={<Checkbox checked={getCheckboxStatus()} onClick={handleClickCheckbox} />} label={''} />
                 </Box>
-                <Link to={'/products/' + data.id} style={{ display: 'inline-flex' }}>
-                    <img src={data.image} width='150px' height='150px' style={{ objectFit: 'contain', marginRight: 5 }} />
+                <Link to={'/products/' + data.id} style={{ display: 'inline-flex', alignItems: 'center' }}>
+                    <img src={data.image} width={mediaQuerySM ? '150px' : '60px'} height={mediaQuerySM ? '150px' : '60px'} style={{ objectFit: 'contain', marginRight: 5 }} />
                 </Link>
                 <Box>
                     <Link to={'/products/' + data.id} style={{ textDecoration: 'none', color: 'inherit' }}>
@@ -96,7 +98,15 @@ export default function CartItem({ data, cart, onChangeCart }) {
                             {data.title}
                         </Typography>
                     </Link>
-                    <Box display='flex' alignItems='flex-start' marginTop='25px'>
+                    {
+                        !mediaQuerySM &&
+                        <Box marginTop='5px'>
+                            <Typography variant='h5' component='span' sx={{ fontWeight: 700 }}>
+                                {data.price}$
+                            </Typography>
+                        </Box>
+                    }
+                    <Box display='flex' alignItems='flex-start' marginTop={{ xs: '5px', sm: '25px' }}>
                         <Button variant='outlined' sx={{ padding: 0, minWidth: 'auto' }} onClick={handleClickMinus}>
                             <RemoveIcon fontSize='large' />
                         </Button>
@@ -115,9 +125,12 @@ export default function CartItem({ data, cart, onChangeCart }) {
                 <IconButton aria-label="delete" onClick={() => setOpenDialog(true)}>
                     <DeleteIcon />
                 </IconButton>
-                <Typography variant='h5' component='span' sx={{ fontWeight: 700, marginTop: '15px' }}>
-                    {data.price}$
-                </Typography>
+                {
+                    mediaQuerySM &&
+                    <Typography variant='h5' component='span' sx={{ fontWeight: 700, marginTop: '15px' }}>
+                        {data.price}$
+                    </Typography>
+                }
             </Box>
             {openDialog &&
                 <DeleteCardItemDialog

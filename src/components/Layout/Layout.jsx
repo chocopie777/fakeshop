@@ -10,7 +10,7 @@ export default function Layout() {
         <Box sx={{ minHeight: '100%', display: 'flex', flexDirection: 'column' }}>
             <Header />
             <main style={{ flexGrow: 1, display: 'flex' }}>
-                <Container maxWidth='lg' sx={{marginTop: 3, marginBottom: 3}}>
+                <Container maxWidth='lg' sx={{ marginTop: 3, marginBottom: 3 }}>
                     <Outlet />
                 </Container>
             </main>

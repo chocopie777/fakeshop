@@ -20,7 +20,7 @@ export default function Product({ id, title, price, image, onAddInCart, cart, lo
     }, [cart]);
 
     return (
-        <Grid item lg={3} md={4} xs={6}>
+        <Grid item lg={3} md={4} sm={6} xs={12}>
             <Card sx={{
                 maxWidth: 'auto',
                 height: '100%',
