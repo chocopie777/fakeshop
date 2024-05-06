@@ -41,7 +41,7 @@ export default function SingleProduct() {
   return (
     <>
       <Box display='flex' alignItems='center' justifyContent='space-between' sx={{ marginBottom: '25px' }}>
-        <Breadcrumbs aria-label="breadcrumb" sx={{overflowX: 'auto', '& .MuiBreadcrumbs-ol': {flexWrap: 'nowrap'}}}>
+        <Breadcrumbs aria-label="breadcrumb" sx={{ overflowX: 'auto', '& .MuiBreadcrumbs-ol': { flexWrap: 'nowrap' } }}>
           <LinkMUI underline="hover" color="inherit" component='div'>
             <Link to='/products' style={{ textDecoration: 'none', color: 'inherit', textWrap: 'nowrap', whiteSpace: 'nowrap' }}>
               {
@@ -75,7 +75,7 @@ export default function SingleProduct() {
               }
             </Link>
           </LinkMUI>
-          <Typography color="text.primary" sx={{textWrap: 'nowrap', whiteSpace: 'nowrap'}}>
+          <Typography color="text.primary" sx={{ textWrap: 'nowrap', whiteSpace: 'nowrap' }}>
             {
               loadingStatus === 'loading'
                 ?
@@ -86,22 +86,24 @@ export default function SingleProduct() {
           </Typography>
         </Breadcrumbs>
       </Box>
-      <Stack direction={{xs: 'column', md: 'row'}} spacing={10} alignItems={{xs: 'center', md: 'flex-start'}} justifyContent='space-between'>
-        <Box sx={{ maxWidth: '400px', height: '400px' }}>
-          {
-            loadingStatus === 'loading'
-              ?
-              <Skeleton width='100%' height='100%' />
-              :
-              <img src={product.image}
-                alt=""
-                width='100%'
-                height='100%'
-                style={{ objectFit: 'contain', objectPosition: 'top' }}
-              />
-          }
+      <Stack direction={{ xs: 'column', md: 'row' }} spacing={{ xs: 1, md: 10 }} alignItems={{ xs: 'center', md: 'flex-start' }} justifyContent='space-between'>
+        <Box padding={{xs: '0px 25px', md: '0px'}}>
+          <Box sx={{ width: '100%', maxHeight: '400px', aspectRatio: '4 / 3' }}>
+            {
+              loadingStatus === 'loading'
+                ?
+                <Skeleton width='100%' height='100%' />
+                :
+                <img src={product.image}
+                  alt=""
+                  width='100%'
+                  height='100%'
+                  style={{ objectFit: 'contain', objectPosition: 'top' }}
+                />
+            }
+          </Box>
         </Box>
-        <Box width={{xs: '100%', md: '50%'}}> 
+        <Box width={{ xs: '100%', md: '50%' }}>
           <Typography variant='h4' sx={{ fontWeight: 700, overflowX: 'auto' }} component='h3' marginBottom={2}>
             {
               loadingStatus === 'loading'
@@ -120,7 +122,7 @@ export default function SingleProduct() {
                 product.description
             }
           </Typography>
-          <Stack direction={{xs: 'column', sm: 'row'}} width='100%' justifyContent='space-between' spacing={3}>
+          <Stack direction={{ xs: 'column', sm: 'row' }} width='100%' justifyContent='space-between' spacing={3}>
             <Paper elevation={10} sx={{ padding: 1, flexGrow: 1 }}>
               <Typography variant='h3' fontWeight={700}>
                 {
@@ -136,7 +138,7 @@ export default function SingleProduct() {
               {
                 loadingStatus === 'loading'
                   ?
-                  <Skeleton width={200} height={100}/>
+                  <Skeleton width={200} height={100} />
                   :
                   isInCart
                     ?
@@ -144,7 +146,7 @@ export default function SingleProduct() {
                       <Button
                         component='div'
                         variant='outlined'
-                        sx={{ height: '100%', width: '100%', paddingLeft: 5, paddingRight: 5, textTransform: 'capitalize' }}>
+                        sx={{ height: { xs: '50px', sm: '100%' }, width: '100%', paddingLeft: 5, paddingRight: 5, textTransform: 'capitalize' }}>
                         В Корзине
                       </Button>
                     </Link>
@@ -152,7 +154,7 @@ export default function SingleProduct() {
                     <Button
                       component='div'
                       variant='contained'
-                      sx={{ height: '100%', width: '100%', paddingLeft: 5, paddingRight: 5, textTransform: 'capitalize' }}
+                      sx={{ height: { xs: '50px', sm: '100%' }, width: '100%', paddingLeft: 5, paddingRight: 5, textTransform: 'capitalize' }}
                       onClick={handleClickOnCart}>
                       В Корзину
                     </Button>

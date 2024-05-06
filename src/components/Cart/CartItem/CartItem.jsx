@@ -84,7 +84,7 @@ export default function CartItem({ data, cart, onChangeCart }) {
     }
 
     return (
-        <Paper elevation={5} sx={{ display: 'flex', padding: { xs: '10px', sm: '25px' }, justifyContent: 'space-between', flexGrow: 1 }}>
+        <Paper elevation={5} sx={{ display: 'flex', padding: { xs: '10px', sm: '25px' }, justifyContent: 'space-between', flexGrow: 1, overflow: 'hidden' }}>
             <Box display='flex'>
                 <Box display='flex' alignItems='center'>
                     <FormControlLabel control={<Checkbox checked={getCheckboxStatus()} onClick={handleClickCheckbox} />} label={''} />
@@ -94,7 +94,7 @@ export default function CartItem({ data, cart, onChangeCart }) {
                 </Link>
                 <Box>
                     <Link to={'/products/' + data.id} style={{ textDecoration: 'none', color: 'inherit' }}>
-                        <Typography variant='h6' component='h3'>
+                        <Typography sx={{typography: {xs: 'body2', sm: 'h6'}, wordBreak: 'break-word'}} component='h3'>
                             {data.title}
                         </Typography>
                     </Link>
