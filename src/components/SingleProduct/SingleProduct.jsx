@@ -6,7 +6,7 @@ import { Link, useParams } from 'react-router-dom';
 
 export default function SingleProduct() {
   const [product, setProduct] = useState({});
-  const [loadingStatus, setLoadingStatus] = useState('idle');
+  const [loadingStatus, setLoadingStatus] = useState('loading');
   const params = useParams();
   const [cart, setCart] = useLocalStorage('cartItems', []);
   const dispatch = useDispatch();
@@ -87,12 +87,12 @@ export default function SingleProduct() {
         </Breadcrumbs>
       </Box>
       <Stack direction={{ xs: 'column', md: 'row' }} spacing={{ xs: 1, md: 10 }} alignItems={{ xs: 'center', md: 'flex-start' }} justifyContent='space-between'>
-        <Box padding={{xs: '0px 25px', md: '0px'}}>
+        <Box width={{xs: '100%', md: '50%'}}>
           <Box sx={{ width: '100%', maxHeight: '400px', aspectRatio: '4 / 3' }}>
             {
               loadingStatus === 'loading'
                 ?
-                <Skeleton width='100%' height='100%' />
+                <Skeleton width='100%' height='100%' sx={{transform: 'scale(1, 1)'}} />
                 :
                 <img src={product.image}
                   alt=""
