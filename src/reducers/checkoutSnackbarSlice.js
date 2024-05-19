@@ -12,3 +12,7 @@ export default function checkoutSnackbarReducer(state = initialState, action) {
             return state;
     }
 }
+
+export const checkoutSnackbarUpdate = data => {
+    return { type: 'checkoutSnackbar/checkoutSnackbarUpdate', payload: data }
+}

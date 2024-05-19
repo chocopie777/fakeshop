@@ -3,6 +3,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import Product from './Product/Product';
 import { useLocalStorage } from 'hooks/useLocalStorage';
+import { cartUpdate } from 'reducers/cartSlice';
 
 // eslint-disable-next-line react/prop-types
 export default function Products({ filterIndex }) {
@@ -16,7 +17,7 @@ export default function Products({ filterIndex }) {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch({ type: 'cart/cartUpdate', payload: cart });
+        dispatch(cartUpdate(cart));
     }, [cart]);
 
     switch (filterIndex) {

@@ -10,6 +10,8 @@ import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantity
 import { useNavigate } from "react-router-dom";
 import DeleteCardItemDialog from 'components/DeleteCardItemDialog/DeleteCardItemDialog';
 import ReactVisibilitySensor from 'react-visibility-sensor';
+import { cartUpdate } from 'reducers/cartSlice';
+import { checkoutSnackbarUpdate } from 'reducers/checkoutSnackbarSlice';
 
 export default function Cart() {
     const [cartItems, setCartItem] = useState([]);
@@ -54,7 +56,7 @@ export default function Cart() {
             navigate('/products');
         }
         setIsCheckboxSelectAll(getInitState());
-        dispatch({ type: 'cart/cartUpdate', payload: cart });
+        dispatch(cartUpdate(cart));
     }, [cart])
 
     const getTotalPrice = () => {
@@ -93,7 +95,7 @@ export default function Cart() {
     const handleClickCheckout = () => {
         setCart([]);
         setIsCheckout(true);
-        dispatch({ type: 'checkoutSnackbar/checkoutSnackbarUpdate', payload: true });
+        dispatch(checkoutSnackbarUpdate(true));
     }
 
     const handleClickDelete = () => {

@@ -3,6 +3,7 @@ import { useLocalStorage } from 'hooks/useLocalStorage';
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
+import { cartUpdate } from 'reducers/cartSlice';
 
 export default function SingleProduct() {
   const [product, setProduct] = useState({});
@@ -24,7 +25,7 @@ export default function SingleProduct() {
   }, []);
 
   useEffect(() => {
-    dispatch({ type: 'cart/cartUpdate', payload: cart });
+    dispatch(cartUpdate(cart));
 
     for (let item of cart) {
       if (item.id == params.productId) {

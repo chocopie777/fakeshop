@@ -1,6 +1,7 @@
 import { Alert, Snackbar } from '@mui/material';
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
+import { checkoutSnackbarUpdate } from 'reducers/checkoutSnackbarSlice';
 
 // eslint-disable-next-line react/prop-types
 export default function CheckoutSnackbar() {
@@ -12,7 +13,7 @@ export default function CheckoutSnackbar() {
     useEffect(() => {
         if (isCheckoutSnackbar) {
             setOpen(true);
-            dispatch({type: 'checkoutSnackbar/checkoutSnackbarUpdate', payload: false})
+            dispatch(checkoutSnackbarUpdate(false))
         }
     }, [isCheckoutSnackbar]);
 

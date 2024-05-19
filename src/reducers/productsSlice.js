@@ -21,18 +21,26 @@ export default function productsReducer(state = initialState, action) {
     }
 }
 
+export const productsLoading = () => {
+    return { type: 'products/productsLoading' }
+}
+
+export const productsLoaded = data => {
+    return { type: 'products/productsLoaded', payload: data }
+}
+
 export async function fetchProducts(dispatch) {
-    dispatch({ type: 'products/productsLoading' });
+    dispatch(productsLoading());
     const response = await fetch('https://fakestoreapi.com/products');
     const json = await response.json();
-    dispatch({ type: 'products/productsLoaded', payload: json });
+    dispatch(productsLoaded(json));
 }
 
 export function fetchProductsInCategory(category) {
     return async function fetchProductsInCategoryThunk(dispatch) {
-        dispatch({ type: 'products/productsLoading' });
+        dispatch(productsLoading());
         const response = await fetch('https://fakestoreapi.com/products/category/' + category);
         const json = await response.json();
-        dispatch({ type: 'products/productsLoaded', payload: json });
+        dispatch(productsLoaded(json));
     }
 }

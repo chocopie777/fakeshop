@@ -12,3 +12,7 @@ export default function cartReducer(state = initialState, action) {
             return state;
     }
 }
+
+export const cartUpdate = data => {
+    return { type: 'cart/cartUpdate', payload: data }
+}
