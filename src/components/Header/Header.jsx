@@ -7,15 +7,15 @@ import CloseIcon from '@mui/icons-material/Close';
 import { Link } from 'react-router-dom';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useLocalStorage } from 'hooks/useLocalStorage';
-import { fetchCategories } from 'reducers/categoriesSlice';
-import { cartUpdate } from 'reducers/cartSlice';
+import { fetchCategories, selectCategories } from 'reducers/categoriesSlice';
+import { cartUpdate, selectCartItems } from 'reducers/cartSlice';
 
 export const Header = () => {
   const dispatch = useDispatch();
   // @ts-ignore
-  const categories = useSelector(state => state.categories.categories);
+  const categories = useSelector(selectCategories);
   // @ts-ignore
-  const cartItems = useSelector(state => state.cart.cartItems);
+  const cartItems = useSelector(selectCartItems);
   const [cart] = useLocalStorage('cartItems', []);
 
   const [open, setOpen] = useState(false);

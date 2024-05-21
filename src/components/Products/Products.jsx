@@ -4,15 +4,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import Product from './Product/Product';
 import { useLocalStorage } from 'hooks/useLocalStorage';
 import { cartUpdate } from 'reducers/cartSlice';
+import { selectLoadingStatus, selectProducts } from 'reducers/productsSlice';
 
 // eslint-disable-next-line react/prop-types
 export default function Products({ filterIndex }) {
 
     const [cart, setCart] = useLocalStorage('cartItems', []);
-    // @ts-ignore
-    const loadingStatus = useSelector(state => state.products.status);
-    // @ts-ignore
-    let products = useSelector(state => state.products.products);
+    const loadingStatus = useSelector(selectLoadingStatus);
+    const products = useSelector(selectProducts);
 
     const dispatch = useDispatch();
 

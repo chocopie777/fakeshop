@@ -3,7 +3,7 @@ import { Box, Button, Checkbox, FormControlLabel, Paper, Stack, Typography } fro
 import React, { useEffect, useState } from 'react'
 import CartItem from './CartItem/CartItem'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchProducts } from 'reducers/productsSlice';
+import { fetchProducts, selectProducts } from 'reducers/productsSlice';
 import { useLocalStorage } from 'hooks/useLocalStorage';
 import { Link } from "react-router-dom";
 import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
@@ -17,7 +17,7 @@ export default function Cart() {
     const [cartItems, setCartItem] = useState([]);
     const dispatch = useDispatch();
     // @ts-ignore
-    const products = useSelector(state => state.products.products);
+    const products = useSelector(selectProducts);
     const [cart, setCart] = useLocalStorage('cartItems', []);
     const getInitState = () => {
         let checkboxStatus = true;

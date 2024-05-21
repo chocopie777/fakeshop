@@ -1,3 +1,5 @@
+import { createSelector } from "reselect";
+
 const initialState = {
     isCheckoutSnackbar: false,
 }
@@ -16,3 +18,8 @@ export default function checkoutSnackbarReducer(state = initialState, action) {
 export const checkoutSnackbarUpdate = data => {
     return { type: 'checkoutSnackbar/checkoutSnackbarUpdate', payload: data }
 }
+
+export const selectIsCheckoutSnackbar = createSelector(
+    state => state.checkoutSnackbar.isCheckoutSnackbar,
+    isCheckoutSnackbar => isCheckoutSnackbar
+)

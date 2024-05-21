@@ -1,3 +1,5 @@
+import { createSelector } from "reselect";
+
 const initialState = {
     cartItems: []
 }
@@ -16,3 +18,8 @@ export default function cartReducer(state = initialState, action) {
 export const cartUpdate = data => {
     return { type: 'cart/cartUpdate', payload: data }
 }
+
+export const selectCartItems = createSelector(
+    state => state.cart.cartItems,
+    cartItems => cartItems
+)

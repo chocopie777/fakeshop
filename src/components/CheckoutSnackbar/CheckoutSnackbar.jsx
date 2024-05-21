@@ -1,14 +1,14 @@
 import { Alert, Snackbar } from '@mui/material';
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { checkoutSnackbarUpdate } from 'reducers/checkoutSnackbarSlice';
+import { checkoutSnackbarUpdate, selectIsCheckoutSnackbar } from 'reducers/checkoutSnackbarSlice';
 
 // eslint-disable-next-line react/prop-types
 export default function CheckoutSnackbar() {
     const [open, setOpen] = React.useState(false);
     const dispatch = useDispatch();
     // @ts-ignore
-    const isCheckoutSnackbar = useSelector(state => state.checkoutSnackbar.isCheckoutSnackbar);
+    const isCheckoutSnackbar = useSelector(selectIsCheckoutSnackbar);
 
     useEffect(() => {
         if (isCheckoutSnackbar) {

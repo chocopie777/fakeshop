@@ -1,3 +1,5 @@
+import { createSelector } from "reselect";
+
 let initialState = {
     products: [],
     status: 'idle',
@@ -44,3 +46,14 @@ export function fetchProductsInCategory(category) {
         dispatch(productsLoaded(json));
     }
 }
+
+export const selectProducts = createSelector(
+    state => state.products.products,
+    products => products
+)
+
+export const selectLoadingStatus = createSelector(
+    state => state.products.status,
+    status => status
+)
+

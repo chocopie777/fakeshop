@@ -3,11 +3,10 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Link as LinkMUI } from '@mui/material';
 import { useSelector } from 'react-redux';
+import { selectCategories } from 'reducers/categoriesSlice';
 
 export default function Categories() {
-
-    // @ts-ignore
-    const categories = useSelector(state => state.categories.categories);
+    const categories = useSelector(selectCategories);
 
     return (
         <>
