@@ -1,9 +1,9 @@
 // @ts-nocheck
-import { Box, Button, Checkbox, FormControlLabel, Paper, Stack, Typography } from '@mui/material'
+import { Box, Button, Checkbox, CircularProgress, FormControlLabel, Paper, Stack, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import CartItem from './CartItem/CartItem'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchProducts, selectProducts } from 'reducers/productsSlice';
+import { fetchProducts, selectLoadingStatus, selectProducts } from 'reducers/productsSlice';
 import { useLocalStorage } from 'hooks/useLocalStorage';
 import { Link } from "react-router-dom";
 import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
@@ -18,6 +18,7 @@ export default function Cart() {
     const dispatch = useDispatch();
     // @ts-ignore
     const products = useSelector(selectProducts);
+    const loadingStatus = useSelector(selectLoadingStatus);
     const [cart, setCart] = useLocalStorage('cartItems', []);
     const getInitState = () => {
         let checkboxStatus = true;
@@ -110,7 +111,7 @@ export default function Cart() {
     }
 
     const handleVisibilityChange = (isVisible) => {
-        if(isVisible) {
+        if (isVisible) {
             setIsDisplayMobileCheckout(true);
         } else {
             setIsDisplayMobileCheckout(false);
@@ -129,106 +130,112 @@ export default function Cart() {
                         {getTotalQuantity()}
                     </Typography>}
             </Box>
-            {cartItems.length > 0
-                ?
-                <Stack direction={{ xs: 'column', md: 'row' }} spacing={2} alignItems='flex-start'>
-                    <Stack spacing={2} width='100%'>
-                        <Paper elevation={5} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: { xs: '5px 10px', sm: '5px 25px' } }}>
-                            <FormControlLabel control={<Checkbox checked={isCheckboxSelectAll} onClick={handleCheckboxSelectAll} />} label="Выбрать все" />
-                            <Box>
-                                {getTotalQuantity() > 0 && <Button variant='text' onClick={() => setOpenDialog(true)}>Удалить выбранные</Button>}
-                            </Box>
-                        </Paper>
-                        {cartItems.map((cartItem) => {
-                            return <CartItem key={cartItem.id} data={cartItem} cart={cart} onChangeCart={setCart} />
-                        })}
-                    </Stack>
-                    {
-                        !isDisplayMobileCheckout &&
-                        <Paper elevation={5} sx={{ padding: '15px', position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 1 }}>
+            {
+                loadingStatus !== 'loading' ?
+                    cartItems.length > 0
+                        ?
+                        <Stack direction={{ xs: 'column', md: 'row' }} spacing={2} alignItems='flex-start'>
+                            <Stack spacing={2} width='100%'>
+                                <Paper elevation={5} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: { xs: '5px 10px', sm: '5px 25px' } }}>
+                                    <FormControlLabel control={<Checkbox checked={isCheckboxSelectAll} onClick={handleCheckboxSelectAll} />} label="Выбрать все" />
+                                    <Box>
+                                        {getTotalQuantity() > 0 && <Button variant='text' onClick={() => setOpenDialog(true)}>Удалить выбранные</Button>}
+                                    </Box>
+                                </Paper>
+                                {cartItems.map((cartItem) => {
+                                    return <CartItem key={cartItem.id} data={cartItem} cart={cart} onChangeCart={setCart} />
+                                })}
+                            </Stack>
                             {
-                                getTotalQuantity() > 0
-                                    ?
-                                    <>
-                                        <Stack direction='row' alignItems='flex-end' justifyContent='space-between' marginBottom='15px'>
-                                            <Box display='flex' flexDirection='column'>
-                                                <Typography variant='h6' component='span'>
-                                                    {
-                                                        getTotalQuantity()
-                                                    }
+                                !isDisplayMobileCheckout &&
+                                <Paper elevation={5} sx={{ padding: '15px', position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 1 }}>
+                                    {
+                                        getTotalQuantity() > 0
+                                            ?
+                                            <>
+                                                <Stack direction='row' alignItems='flex-end' justifyContent='space-between' marginBottom='15px'>
+                                                    <Box display='flex' flexDirection='column'>
+                                                        <Typography variant='h6' component='span'>
+                                                            {
+                                                                getTotalQuantity()
+                                                            }
 
-                                                    {
-                                                        getTotalQuantity() > 1 ? ' товаров' : ' товар'
-                                                    }
-                                                </Typography>
-                                            </Box>
-                                            <Typography variant='h6' component='span'>
-                                                {
-                                                    getTotalPrice()
-                                                }$
-                                            </Typography>
-                                        </Stack>
-                                        <Button variant='contained' sx={{ width: '100%' }} onClick={handleClickCheckout}>Перейти к оформлению</Button>
-                                    </>
-                                    :
-                                    <>
-                                        <Typography variant='body2' fontWeight={700} marginBottom='15px'>Выберите товары, чтобы перейти к оформлению</Typography>
-                                        <Button variant='contained' sx={{ width: '100%' }} disabled>Перейти к оформлению</Button>
-                                    </>
+                                                            {
+                                                                getTotalQuantity() > 1 ? ' товаров' : ' товар'
+                                                            }
+                                                        </Typography>
+                                                    </Box>
+                                                    <Typography variant='h6' component='span'>
+                                                        {
+                                                            getTotalPrice()
+                                                        }$
+                                                    </Typography>
+                                                </Stack>
+                                                <Button variant='contained' sx={{ width: '100%' }} onClick={handleClickCheckout}>Перейти к оформлению</Button>
+                                            </>
+                                            :
+                                            <>
+                                                <Typography variant='body2' fontWeight={700} marginBottom='15px'>Выберите товары, чтобы перейти к оформлению</Typography>
+                                                <Button variant='contained' sx={{ width: '100%' }} disabled>Перейти к оформлению</Button>
+                                            </>
+                                    }
+                                </Paper>
                             }
-                        </Paper>
-                    }
-                    <ReactVisibilitySensor onChange={handleVisibilityChange} partialVisibility={true}>
-                        <Paper elevation={5} sx={{ maxWidth: { xs: 'auto', md: '300px' }, width: '100%', padding: '15px', position: 'sticky', top: 64 }}>
-                            {
-                                getTotalQuantity() > 0
-                                    ?
-                                    <>
-                                        <Typography variant='h6' sx={{ marginBottom: '15px' }}>Детали заказа</Typography>
-                                        <Stack direction='row' alignItems='flex-end' justifyContent='space-between' marginBottom='15px'>
-                                            <Box display='flex' flexDirection='column'>
-                                                <Typography variant='caption' component='span'>Итого:</Typography>
-                                                <Typography variant='h6' component='span'>
-                                                    {
-                                                        getTotalQuantity()
-                                                    }
+                            <ReactVisibilitySensor onChange={handleVisibilityChange} partialVisibility={true}>
+                                <Paper elevation={5} sx={{ maxWidth: { xs: 'auto', md: '300px' }, width: '100%', padding: '15px', position: 'sticky', top: 64 }}>
+                                    {
+                                        getTotalQuantity() > 0
+                                            ?
+                                            <>
+                                                <Typography variant='h6' sx={{ marginBottom: '15px' }}>Детали заказа</Typography>
+                                                <Stack direction='row' alignItems='flex-end' justifyContent='space-between' marginBottom='15px'>
+                                                    <Box display='flex' flexDirection='column'>
+                                                        <Typography variant='caption' component='span'>Итого:</Typography>
+                                                        <Typography variant='h6' component='span'>
+                                                            {
+                                                                getTotalQuantity()
+                                                            }
 
-                                                    {
-                                                        getTotalQuantity() > 1 ? ' товаров' : ' товар'
-                                                    }
-                                                </Typography>
-                                            </Box>
-                                            <Typography variant='h6' component='span'>
-                                                {
-                                                    getTotalPrice()
-                                                }$
-                                            </Typography>
-                                        </Stack>
-                                        <Button variant='contained' sx={{ width: '100%' }} onClick={handleClickCheckout}>Перейти к оформлению</Button>
-                                    </>
-                                    :
-                                    <>
-                                        <Typography variant='body2' fontWeight={700} marginBottom='15px'>Выберите товары, чтобы перейти к оформлению</Typography>
-                                        <Button variant='contained' sx={{ width: '100%' }} disabled>Перейти к оформлению</Button>
-                                    </>
-                            }
-                        </Paper>
-                    </ReactVisibilitySensor>
-                </Stack>
-                :
-                <Box display='flex' justifyContent='center'>
-                    <Stack justifyContent='center' textAlign='center'>
-                        <Box marginBottom={3}>
-                            <ProductionQuantityLimitsIcon fontSize='large' />
+                                                            {
+                                                                getTotalQuantity() > 1 ? ' товаров' : ' товар'
+                                                            }
+                                                        </Typography>
+                                                    </Box>
+                                                    <Typography variant='h6' component='span'>
+                                                        {
+                                                            getTotalPrice()
+                                                        }$
+                                                    </Typography>
+                                                </Stack>
+                                                <Button variant='contained' sx={{ width: '100%' }} onClick={handleClickCheckout}>Перейти к оформлению</Button>
+                                            </>
+                                            :
+                                            <>
+                                                <Typography variant='body2' fontWeight={700} marginBottom='15px'>Выберите товары, чтобы перейти к оформлению</Typography>
+                                                <Button variant='contained' sx={{ width: '100%' }} disabled>Перейти к оформлению</Button>
+                                            </>
+                                    }
+                                </Paper>
+                            </ReactVisibilitySensor>
+                        </Stack>
+                        :
+                        <Box display='flex' justifyContent='center'>
+                            <Stack justifyContent='center' textAlign='center'>
+                                <Box marginBottom={3}>
+                                    <ProductionQuantityLimitsIcon fontSize='large' />
+                                </Box>
+                                <Typography variant='h5' fontWeight={700} marginBottom={1}>
+                                    Пока пусто
+                                </Typography>
+                                <Typography>
+                                    Воспользуйтесь <Link to='/products/categories' style={{ textDecoration: 'none' }}>каталогом</Link>
+                                </Typography>
+                            </Stack>
                         </Box>
-                        <Typography variant='h5' fontWeight={700} marginBottom={1}>
-                            Пока пусто
-                        </Typography>
-                        <Typography>
-                            Воспользуйтесь <Link to='/products/categories' style={{ textDecoration: 'none' }}>каталогом</Link>
-                        </Typography>
-                    </Stack>
-                </Box>
+                    :
+                    <Box display='flex' justifyContent='center' alignItems='center'>
+                        <CircularProgress />
+                    </Box>
             }
             {openDialog &&
                 <DeleteCardItemDialog
