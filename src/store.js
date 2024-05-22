@@ -1,12 +1,16 @@
-import { composeWithDevTools } from '@redux-devtools/extension';
-import { applyMiddleware, createStore } from 'redux';
-import { thunk } from 'redux-thunk';
-import rootReducer from 'rootReducer';
+import { configureStore } from '@reduxjs/toolkit';
+import cartReducer from 'reducers/cartSlice';
+import categoriesReducer from 'reducers/categoriesSlice';
+import checkoutSnackbarReducer from 'reducers/checkoutSnackbarSlice';
+import productsReducer from 'reducers/productsSlice';
 
-const composedEnhancer = composeWithDevTools(
-    applyMiddleware(thunk)
-)
-
-const store = createStore(rootReducer, undefined, composedEnhancer);
+const store = configureStore({
+    reducer: {
+        products: productsReducer,
+        categories: categoriesReducer,
+        cart: cartReducer,
+        checkoutSnackbar: checkoutSnackbarReducer,
+    }
+})
 
 export default store;

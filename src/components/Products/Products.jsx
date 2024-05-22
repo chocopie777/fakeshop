@@ -11,7 +11,8 @@ export default function Products({ filterIndex }) {
 
     const [cart, setCart] = useLocalStorage('cartItems', []);
     const loadingStatus = useSelector(selectLoadingStatus);
-    const products = useSelector(selectProducts);
+    let products = useSelector(selectProducts);
+    products = products.slice();
 
     const dispatch = useDispatch();
 
