@@ -1,25 +1,23 @@
-import { createSelector } from "@reduxjs/toolkit";
+import { createSelector, createSlice } from "@reduxjs/toolkit";
 
 let initialState = {
     categories: [],
     status: 'idle',
 };
 
-export default function categoriesReducer(state = initialState, action) {
-    switch (action.type) {
-        case 'categories/getCategories':
-            return {
-                ...state,
-                categories: action.payload,
-            }
-        default:
-            return state;
+const categoriesSlice = createSlice({
+    name: 'categories',
+    initialState,
+    reducers: {
+        getCategories(state, action) {
+            state.categories = action.payload;
+        }
     }
-}
+})
 
-export const getCategories = data => {
-    return { type: 'categories/getCategories', payload: data }
-}
+export const { getCategories } = categoriesSlice.actions;
+
+export default categoriesSlice.reducer;
 
 export async function fetchCategories(dispatch) {
     const response = await fetch('https://fakestoreapi.com/products/categories');

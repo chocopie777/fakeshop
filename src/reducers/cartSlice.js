@@ -1,23 +1,22 @@
-import { createSelector } from "@reduxjs/toolkit";
+import { createSelector, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     cartItems: []
 }
 
-export default function cartReducer(state = initialState, action) {
-    switch (action.type) {
-        case 'cart/cartUpdate':
-            return {
-                cartItems: action.payload
-            }
-        default:
-            return state;
+const cartSlice = createSlice({
+    name: 'cart',
+    initialState,
+    reducers: {
+        cartUpdate(state, action) {
+            state.cartItems = action.payload;
+        }
     }
-}
+});
 
-export const cartUpdate = data => {
-    return { type: 'cart/cartUpdate', payload: data }
-}
+export const { cartUpdate } = cartSlice.actions;
+
+export default cartSlice.reducer;
 
 export const selectCartItems = createSelector(
     state => state.cart.cartItems,

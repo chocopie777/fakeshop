@@ -1,35 +1,27 @@
-import { createSelector } from "@reduxjs/toolkit";
+import { createSelector, createSlice } from "@reduxjs/toolkit";
 
 let initialState = {
     products: [],
     status: 'idle',
 };
 
-export default function productsReducer(state = initialState, action) {
-    switch (action.type) {
-        case 'products/productsLoading':
-            return {
-                ...state,
-                status: 'loading'
-            }
-        case 'products/productsLoaded':
-            return {
-                ...state,
-                status: 'idle',
-                products: action.payload,
-            }
-        default:
-            return state;
+const productsSlice = createSlice({
+    name: 'products',
+    initialState,
+    reducers: {
+        productsLoading(state) {
+            state.status = 'loading';
+        },
+        productsLoaded(state, action) {
+            state.status = 'idle';
+            state.products = action.payload;
+        }
     }
-}
+})
 
-export const productsLoading = () => {
-    return { type: 'products/productsLoading' }
-}
+export const { productsLoaded, productsLoading } = productsSlice.actions;
 
-export const productsLoaded = data => {
-    return { type: 'products/productsLoaded', payload: data }
-}
+export default productsSlice.reducer;
 
 export async function fetchProducts(dispatch) {
     dispatch(productsLoading());

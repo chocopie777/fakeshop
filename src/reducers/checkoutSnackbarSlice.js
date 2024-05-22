@@ -1,23 +1,22 @@
-import { createSelector } from "@reduxjs/toolkit";
+import { createSelector, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     isCheckoutSnackbar: false,
 }
 
-export default function checkoutSnackbarReducer(state = initialState, action) {
-    switch (action.type) {
-        case 'checkoutSnackbar/checkoutSnackbarUpdate':
-            return {
-                isCheckoutSnackbar: action.payload
-            }
-        default:
-            return state;
+const checkoutSnackbarSlice = createSlice({
+    name: 'checkoutSnackbar',
+    initialState,
+    reducers: {
+        checkoutSnackbarUpdate(state, action) {
+            state.isCheckoutSnackbar = action.payload;
+        }
     }
-}
+});
 
-export const checkoutSnackbarUpdate = data => {
-    return { type: 'checkoutSnackbar/checkoutSnackbarUpdate', payload: data }
-}
+export const { checkoutSnackbarUpdate } = checkoutSnackbarSlice.actions;
+
+export default checkoutSnackbarSlice.reducer;
 
 export const selectIsCheckoutSnackbar = createSelector(
     state => state.checkoutSnackbar.isCheckoutSnackbar,
