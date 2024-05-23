@@ -1,4 +1,4 @@
-import { createSelector, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSelector, createSlice } from "@reduxjs/toolkit";
 
 let initialState = {
     categories: [],
@@ -8,22 +8,21 @@ let initialState = {
 const categoriesSlice = createSlice({
     name: 'categories',
     initialState,
-    reducers: {
-        getCategories(state, action) {
+    reducers: {},
+    extraReducers: builder => {
+        builder.addCase(fetchCategories.fulfilled, (state, action) => {
             state.categories = action.payload;
-        }
+        })
     }
 })
 
-export const { getCategories } = categoriesSlice.actions;
-
 export default categoriesSlice.reducer;
 
-export async function fetchCategories(dispatch) {
+export const fetchCategories = createAsyncThunk('categories/fetchCategories', async () => {
     const response = await fetch('https://fakestoreapi.com/products/categories');
     const json = await response.json();
-    dispatch(getCategories(json));
-}
+    return json
+})
 
 export const selectCategories = createSelector(
     state => state.categories.categories,

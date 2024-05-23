@@ -29,7 +29,7 @@ export const Header = () => {
 
   useEffect(() => {
     // @ts-ignore
-    dispatch(fetchCategories);
+    dispatch(fetchCategories());
     dispatch(cartUpdate(cart));
   }, []);
 

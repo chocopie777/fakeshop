@@ -11,7 +11,7 @@ export default function AllProducts() {
 
     useEffect(() => {
         // @ts-ignore
-        dispatch(fetchProducts);
+        dispatch(fetchProducts());
     }, []);
 
 

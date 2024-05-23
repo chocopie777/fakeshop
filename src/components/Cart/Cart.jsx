@@ -38,7 +38,7 @@ export default function Cart() {
 
     useEffect(() => {
         // @ts-ignore
-        dispatch(fetchProducts);
+        dispatch(fetchProducts());
     }, []);
 
     useEffect(() => {
