@@ -1,11 +1,12 @@
 import { Grid } from '@mui/material';
 import React, { FC, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
 import Product from './Product/Product';
 import { useLocalStorage } from 'hooks/useLocalStorage';
 import { cartUpdate } from 'reducers/cartSlice';
 import { selectLoadingStatus, selectProducts } from 'reducers/productsSlice';
 import { CartLocalStorage, FilterState } from 'global/types';
+import { useAppSelector } from 'hooks/useAppSelector';
+import { useAppDispatch } from 'hooks/useAppDispatch';
 
 type Props = {
     filterIndex: FilterState,
@@ -13,11 +14,11 @@ type Props = {
 
 const Products: FC<Props> = ({ filterIndex }) => {
     const [cart, setCart] = useLocalStorage<CartLocalStorage>('cartItems', []);
-    const loadingStatus = useSelector(selectLoadingStatus);
-    let products = useSelector(selectProducts);
+    const loadingStatus = useAppSelector(selectLoadingStatus);
+    let products = useAppSelector(selectProducts);
     products = products.slice();
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         dispatch(cartUpdate(cart));

@@ -1,12 +1,13 @@
 import { Alert, Snackbar } from '@mui/material';
+import { useAppDispatch } from 'hooks/useAppDispatch';
+import { useAppSelector } from 'hooks/useAppSelector';
 import React, { FC, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
 import { checkoutSnackbarUpdate, selectIsCheckoutSnackbar } from 'reducers/checkoutSnackbarSlice';
 
 const CheckoutSnackbar: FC = () => {
     const [open, setOpen] = React.useState<boolean>(false);
-    const dispatch = useDispatch();
-    const isCheckoutSnackbar = useSelector(selectIsCheckoutSnackbar);
+    const dispatch = useAppDispatch();
+    const isCheckoutSnackbar = useAppSelector(selectIsCheckoutSnackbar);
 
     useEffect(() => {
         if (isCheckoutSnackbar) {

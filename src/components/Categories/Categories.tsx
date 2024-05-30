@@ -2,11 +2,11 @@ import { Box, Breadcrumbs, Card, CardContent, Grid, Typography } from '@mui/mate
 import React, { FC } from 'react'
 import { Link } from 'react-router-dom'
 import { Link as LinkMUI } from '@mui/material';
-import { useSelector } from 'react-redux';
 import { selectCategories } from 'reducers/categoriesSlice';
+import { useAppSelector } from 'hooks/useAppSelector';
 
 const Categories: FC = () => {
-    const categories = useSelector(selectCategories);
+    const categories = useAppSelector(selectCategories);
 
     return (
         <>

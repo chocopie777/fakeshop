@@ -1,8 +1,8 @@
 import { Box, Breadcrumbs, Button, Link as LinkMUI, Paper, Skeleton, Stack, Typography } from '@mui/material'
 import { CartItem, CartLocalStorage } from 'global/types';
+import { useAppDispatch } from 'hooks/useAppDispatch';
 import { useLocalStorage } from 'hooks/useLocalStorage';
 import React, { FC, useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import { cartUpdate } from 'reducers/cartSlice';
 
@@ -11,7 +11,7 @@ const SingleProduct: FC = () => {
   const [loadingStatus, setLoadingStatus] = useState<'loading' | 'idle'>('loading');
   const params = useParams();
   const [cart, setCart] = useLocalStorage<CartLocalStorage>('cartItems', []);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [isInCart, setIsInCart] = useState<boolean>(false);
 
   useEffect(() => {

@@ -2,7 +2,6 @@ import React, { FC, useEffect, useState } from 'react'
 import { AppBar, Badge, Box, Button, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemText, Toolbar, Typography, useMediaQuery, useTheme } from '@mui/material';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import MenuIcon from '@mui/icons-material/Menu';
-import { useDispatch, useSelector } from 'react-redux';
 import CloseIcon from '@mui/icons-material/Close';
 import { Link } from 'react-router-dom';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
@@ -10,11 +9,13 @@ import { useLocalStorage } from 'hooks/useLocalStorage';
 import { fetchCategories, selectCategories } from 'reducers/categoriesSlice';
 import { cartUpdate, selectCartItems } from 'reducers/cartSlice';
 import { CartLocalStorage } from 'global/types';
+import { useAppDispatch } from 'hooks/useAppDispatch';
+import { useAppSelector } from 'hooks/useAppSelector';
 
 export const Header: FC = () => {
-  const dispatch = useDispatch();
-  const categories = useSelector(selectCategories);
-  const cartItems = useSelector(selectCartItems);
+  const dispatch = useAppDispatch();
+  const categories = useAppSelector(selectCategories);
+  const cartItems = useAppSelector(selectCartItems);
   const [cart] = useLocalStorage<CartLocalStorage>('cartItems', []);
 
   const [open, setOpen] = useState<boolean>(false);

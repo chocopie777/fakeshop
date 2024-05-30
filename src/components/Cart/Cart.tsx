@@ -1,7 +1,6 @@
 import { Box, Button, Checkbox, CircularProgress, FormControlLabel, Paper, Stack, Typography } from '@mui/material'
 import React, { FC, useEffect, useState } from 'react'
 import CartItem from './CartItem/CartItem'
-import { useDispatch, useSelector } from 'react-redux'
 import { fetchProducts, selectLoadingStatus, selectProducts } from 'reducers/productsSlice';
 import { useLocalStorage } from 'hooks/useLocalStorage';
 import { Link } from "react-router-dom";
@@ -12,12 +11,14 @@ import ReactVisibilitySensor from 'react-visibility-sensor';
 import { cartUpdate } from 'reducers/cartSlice';
 import { checkoutSnackbarUpdate } from 'reducers/checkoutSnackbarSlice';
 import { CartItems, CartLocalStorage } from 'global/types';
+import { useAppSelector } from 'hooks/useAppSelector';
+import { useAppDispatch } from 'hooks/useAppDispatch';
 
 const Cart: FC = () => {
     const [cartItems, setCartItem] = useState<CartItems>([]);
-    const dispatch = useDispatch();
-    const products = useSelector(selectProducts);
-    const loadingStatus = useSelector(selectLoadingStatus);
+    const dispatch = useAppDispatch();
+    const products = useAppSelector(selectProducts);
+    const loadingStatus = useAppSelector(selectLoadingStatus);
     const [cart, setCart] = useLocalStorage<CartLocalStorage>('cartItems', []);
     const getInitState = () => {
         let checkboxStatus = true;

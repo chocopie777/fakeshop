@@ -1,6 +1,11 @@
-import { createSelector, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSelector, createSlice } from "@reduxjs/toolkit";
+import { RootState } from "store";
 
-const initialState = {
+export type CheckoutSnackbarState = {
+    isCheckoutSnackbar: boolean
+}
+
+const initialState: CheckoutSnackbarState = {
     isCheckoutSnackbar: false,
 }
 
@@ -8,7 +13,7 @@ const checkoutSnackbarSlice = createSlice({
     name: 'checkoutSnackbar',
     initialState,
     reducers: {
-        checkoutSnackbarUpdate(state, action) {
+        checkoutSnackbarUpdate(state, action: PayloadAction<boolean>) {
             state.isCheckoutSnackbar = action.payload;
         }
     }
@@ -19,6 +24,6 @@ export const { checkoutSnackbarUpdate } = checkoutSnackbarSlice.actions;
 export default checkoutSnackbarSlice.reducer;
 
 export const selectIsCheckoutSnackbar = createSelector(
-    state => state.checkoutSnackbar.isCheckoutSnackbar,
+    (state: RootState) => state.checkoutSnackbar.isCheckoutSnackbar,
     isCheckoutSnackbar => isCheckoutSnackbar
 )

@@ -1,15 +1,15 @@
 import { Box, Breadcrumbs, Link as LinkMUI, Typography } from '@mui/material';
 import Products from 'components/Products/Products'
 import React, { FC, useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import { fetchProductsInCategory } from 'reducers/productsSlice';
 import Filter from 'components/Filter/Filter';
 import { FilterState } from 'global/types';
+import { useAppDispatch } from 'hooks/useAppDispatch';
 
 const CategoryProducts: FC = () => {
     const [filterIndex, setFilterIndex] = useState<FilterState>(0);
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const { categoryId } = useParams();
 
     useEffect(() => {

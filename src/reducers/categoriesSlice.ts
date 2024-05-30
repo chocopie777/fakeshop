@@ -1,6 +1,12 @@
-import { createAsyncThunk, createSelector, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createAsyncThunk, createSelector, createSlice } from "@reduxjs/toolkit";
+import { RootState } from "store";
 
-let initialState = {
+export type CategoriesState = {
+    categories: Array<string>,
+    status: 'idle' | 'loading',
+}
+
+const initialState: CategoriesState = {
     categories: [],
     status: 'idle',
 };
@@ -10,7 +16,7 @@ const categoriesSlice = createSlice({
     initialState,
     reducers: {},
     extraReducers: builder => {
-        builder.addCase(fetchCategories.fulfilled, (state, action) => {
+        builder.addCase(fetchCategories.fulfilled, (state, action: PayloadAction<Array<string>>) => {
             state.categories = action.payload;
         })
     }
@@ -25,7 +31,7 @@ export const fetchCategories = createAsyncThunk('categories/fetchCategories', as
 })
 
 export const selectCategories = createSelector(
-    state => state.categories.categories,
+    (state: RootState) => state.categories.categories,
     categories => categories
 )
 
