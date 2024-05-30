@@ -18,5 +18,5 @@ export const useLocalStorage = <T>(keyName: string, initialValue: T): [T, React.
         localStorage.setItem(keyName, JSON.stringify(value));
     }, [keyName, value]);
 
-    return [value, setValue] as const;
+    return [value, setValue];
 }
