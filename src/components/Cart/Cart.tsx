@@ -1,6 +1,5 @@
 import { Box, Button, Checkbox, CircularProgress, FormControlLabel, Paper, Stack, Typography } from '@mui/material'
 import React, { FC, useEffect, useState } from 'react'
-import CartItem from './CartItem/CartItem'
 import { fetchProducts, selectLoadingStatus, selectProducts } from 'reducers/productsSlice';
 import { useLocalStorage } from 'hooks/useLocalStorage';
 import { Link } from "react-router-dom";
@@ -13,6 +12,7 @@ import { checkoutSnackbarUpdate } from 'reducers/checkoutSnackbarSlice';
 import { CartItems, CartLocalStorage } from 'global/types';
 import { useAppSelector } from 'hooks/useAppSelector';
 import { useAppDispatch } from 'hooks/useAppDispatch';
+import CartItem from './CartItem/CartItem';
 
 const Cart: FC = () => {
     const [cartItems, setCartItem] = useState<CartItems>([]);
@@ -22,9 +22,8 @@ const Cart: FC = () => {
     const [cart, setCart] = useLocalStorage<CartLocalStorage>('cartItems', []);
     const getInitState = () => {
         let checkboxStatus = true;
-        for (let item of cart) {
+        for (const item of cart) {
             if (!item.checked) {
-                console.log()
                 checkboxStatus = false;
             }
         }
@@ -42,8 +41,8 @@ const Cart: FC = () => {
 
     useEffect(() => {
         const nextCartItems = [];
-        for (let cartItem of cart) {
-            let productItem = products.find((product) => product.id === cartItem.id);
+        for (const cartItem of cart) {
+            const productItem = products.find((product) => product.id === cartItem.id);
             if (productItem !== undefined) {
                 nextCartItems.unshift(productItem);
             }

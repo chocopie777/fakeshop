@@ -29,7 +29,7 @@ const SingleProduct: FC = () => {
     dispatch(cartUpdate(cart));
 
     if (typeof params.productId !== 'undefined') {
-      for (let item of cart) {
+      for (const item of cart) {
         if (item.id == parseInt(params.productId, 10)) {
           setIsInCart(true);
         }

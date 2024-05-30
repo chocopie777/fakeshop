@@ -30,7 +30,7 @@ const Product: FC<Props> = ({ id, title, price, image, onAddInCart, cart, loadin
 
     useEffect(() => {
         if (cart !== null) {
-            for (let item of cart) {
+            for (const item of cart) {
                 if (item.id === id) {
                     setIsInCart(true);
                 }

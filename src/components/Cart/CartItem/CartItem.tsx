@@ -6,10 +6,10 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { Link } from 'react-router-dom';
 import DeleteCardItemDialog from 'components/DeleteCardItemDialog/DeleteCardItemDialog';
 import { useState } from 'react';
-import { CartItem, CartLocalStorage } from 'global/types';
+import { CartItem as CartItemType, CartLocalStorage } from 'global/types';
 
 type Props = {
-    data: CartItem,
+    data: CartItemType,
     cart: CartLocalStorage,
     onChangeCart: React.Dispatch<React.SetStateAction<CartLocalStorage>>,
 }
@@ -56,7 +56,7 @@ const CartItem: FC<Props> = ({ data, cart, onChangeCart }) => {
     }
 
     const handleClickDelete = () => {
-        let nextCart: CartLocalStorage = cart.filter((item) => {
+        const nextCart: CartLocalStorage = cart.filter((item) => {
             return item.id !== data.id;
         })
 
@@ -84,7 +84,7 @@ const CartItem: FC<Props> = ({ data, cart, onChangeCart }) => {
     }
 
     const getProductQuantity = () => {
-        let el = (cart.find((item) => item.id === data.id))
+        const el = (cart.find((item) => item.id === data.id))
         return el !== undefined ? el.quantity : 1;
     }
 
