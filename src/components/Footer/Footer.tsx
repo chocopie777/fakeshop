@@ -1,7 +1,7 @@
 import { Box, Container, Paper, Typography } from '@mui/material'
-import React from 'react'
+import React, { FC } from 'react'
 
-export default function Footer() {
+const Footer: FC = () => {
     return (
         <footer>
             <Paper variant='outlined' square={true}>
@@ -16,3 +16,5 @@ export default function Footer() {
         </footer>
     )
 }
+
+export default Footer;

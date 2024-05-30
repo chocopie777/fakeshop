@@ -1,11 +1,11 @@
 import { ThemeProvider } from '@emotion/react';
 import './App.css';
-import React from 'react';
+import React, { FC } from 'react';
 import { RouterProvider } from 'react-router-dom';
 import router from 'router';
 import { createTheme, responsiveFontSizes } from '@mui/material';
 
-function App() {
+const App: FC = () => {
   let theme = createTheme();
   theme = responsiveFontSizes(theme);
 

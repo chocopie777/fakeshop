@@ -1,20 +1,39 @@
 /* eslint-disable react/prop-types */
 import { Box, Button, Card, CardContent, CardMedia, Grid, Skeleton, Typography } from '@mui/material'
-import React, { useEffect } from 'react'
+import { CartLocalStorage } from 'global/types';
+import React, { FC, useEffect } from 'react'
 import { useState } from 'react';
 import { Link } from 'react-router-dom'
 
-export default function Product({ id, title, price, image, onAddInCart, cart, loading }) {
-    const [isInCart, setIsInCart] = useState(false);
+type Props = {
+    id: number | null,
+    title: string | null,
+    price: number | null,
+    image: string | null,
+    onAddInCart: React.Dispatch<React.SetStateAction<CartLocalStorage>> | null,
+    cart: CartLocalStorage | null,
+    loading: boolean,
+}
+
+const Product: FC<Props> = ({ id, title, price, image, onAddInCart, cart, loading }) => {
+    const [isInCart, setIsInCart] = useState<boolean>(false);
 
     const handleClickOnCart = () => {
-        onAddInCart([...cart, { id: id, quantity: 1, checked: true }]);
+        if (onAddInCart !== null) {
+            if (cart !== null) {
+                if (id !== null) {
+                    onAddInCart([...cart, { id: id, quantity: 1, checked: true }]);
+                }
+            }
+        }
     }
 
     useEffect(() => {
-        for (let item of cart) {
-            if (item.id === id) {
-                setIsInCart(true);
+        if (cart !== null) {
+            for (let item of cart) {
+                if (item.id === id) {
+                    setIsInCart(true);
+                }
             }
         }
     }, [cart]);
@@ -43,8 +62,8 @@ export default function Product({ id, title, price, image, onAddInCart, cart, lo
                             <CardMedia
                                 component="img"
                                 height="194"
-                                image={image}
-                                alt={title}
+                                image={image !== null ? image : ''}
+                                alt={title !== null ? title : ''}
                                 sx={{ objectFit: 'contain' }}
                             />
                     }
@@ -73,7 +92,7 @@ export default function Product({ id, title, price, image, onAddInCart, cart, lo
                     {
                         loading
                             ?
-                            <Skeleton height={64}/>
+                            <Skeleton height={64} />
                             :
                             isInCart
                                 ?
@@ -102,3 +121,5 @@ export default function Product({ id, title, price, image, onAddInCart, cart, lo
         </Grid>
     )
 }
+
+export default Product;

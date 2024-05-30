@@ -1,14 +1,19 @@
 import { Button, Menu, MenuItem } from '@mui/material'
-import React, { useState } from 'react'
+import React, { FC, useState } from 'react'
 import SortIcon from '@mui/icons-material/Sort';
+import { FilterState } from 'global/types';
 
-// eslint-disable-next-line react/prop-types
-export default function Filter({ onClickItem, filterIndex }) {
+type Props = {
+    onClickItem: React.Dispatch<React.SetStateAction<FilterState>>,
+    filterIndex: FilterState,
+}
+
+const Filter: FC<Props> = ({ onClickItem, filterIndex }) => {
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
     const filterNames = ['сначала недорогие', 'сначала дорогие'];
 
-    const handleOpen = (event) => {
+    const handleOpen = (event: any) => {
         setAnchorEl(event.currentTarget);
     };
 
@@ -16,7 +21,7 @@ export default function Filter({ onClickItem, filterIndex }) {
         setAnchorEl(null);
     };
 
-    const handleClickItem = (index) => {
+    const handleClickItem = (index: 0 | 1) => {
         handleClose();
         onClickItem(index);
     }
@@ -42,3 +47,5 @@ export default function Filter({ onClickItem, filterIndex }) {
         </>
     )
 }
+
+export default Filter;

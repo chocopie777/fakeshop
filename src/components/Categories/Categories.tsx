@@ -1,11 +1,11 @@
 import { Box, Breadcrumbs, Card, CardContent, Grid, Typography } from '@mui/material'
-import React from 'react'
+import React, { FC } from 'react'
 import { Link } from 'react-router-dom'
 import { Link as LinkMUI } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { selectCategories } from 'reducers/categoriesSlice';
 
-export default function Categories() {
+const Categories: FC = () => {
     const categories = useSelector(selectCategories);
 
     return (
@@ -46,3 +46,5 @@ export default function Categories() {
         </>
     )
 }
+
+export default Categories;

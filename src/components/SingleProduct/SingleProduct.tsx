@@ -1,17 +1,18 @@
 import { Box, Breadcrumbs, Button, Link as LinkMUI, Paper, Skeleton, Stack, Typography } from '@mui/material'
+import { CartItem, CartLocalStorage } from 'global/types';
 import { useLocalStorage } from 'hooks/useLocalStorage';
-import React, { useEffect, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import { cartUpdate } from 'reducers/cartSlice';
 
-export default function SingleProduct() {
-  const [product, setProduct] = useState({});
-  const [loadingStatus, setLoadingStatus] = useState('loading');
+const SingleProduct: FC = () => {
+  const [product, setProduct] = useState<CartItem | null>(null);
+  const [loadingStatus, setLoadingStatus] = useState<'loading' | 'idle'>('loading');
   const params = useParams();
-  const [cart, setCart] = useLocalStorage('cartItems', []);
+  const [cart, setCart] = useLocalStorage<CartLocalStorage>('cartItems', []);
   const dispatch = useDispatch();
-  const [isInCart, setIsInCart] = useState(false);
+  const [isInCart, setIsInCart] = useState<boolean>(false);
 
   useEffect(() => {
     async function fetchSingleProduct() {
@@ -27,16 +28,19 @@ export default function SingleProduct() {
   useEffect(() => {
     dispatch(cartUpdate(cart));
 
-    for (let item of cart) {
-      if (item.id == params.productId) {
-        setIsInCart(true);
+    if (typeof params.productId !== 'undefined') {
+      for (let item of cart) {
+        if (item.id == parseInt(params.productId, 10)) {
+          setIsInCart(true);
+        }
       }
     }
   }, [cart]);
 
   const handleClickOnCart = () => {
-    // @ts-ignore
-    setCart([...cart, { id: product.id, quantity: 1, checked: true }]);
+    if (product !== null) {
+      setCart([...cart, { id: product.id, quantity: 1, checked: true }]);
+    }
   }
 
   return (
@@ -66,13 +70,13 @@ export default function SingleProduct() {
             </Link>
           </LinkMUI>
           <LinkMUI underline="hover" color="inherit" component='div'>
-            <Link to={'/products/categories/' + product.category} style={{ textDecoration: 'none', color: 'inherit', textWrap: 'nowrap', whiteSpace: 'nowrap' }}>
+            <Link to={'/products/categories/' + product?.category} style={{ textDecoration: 'none', color: 'inherit', textWrap: 'nowrap', whiteSpace: 'nowrap' }}>
               {
                 loadingStatus === 'loading'
                   ?
                   <Skeleton width={100} />
                   :
-                  product.category
+                  product?.category
               }
             </Link>
           </LinkMUI>
@@ -82,20 +86,20 @@ export default function SingleProduct() {
                 ?
                 <Skeleton width={100} />
                 :
-                product.title
+                product?.title
             }
           </Typography>
         </Breadcrumbs>
       </Box>
       <Stack direction={{ xs: 'column', md: 'row' }} spacing={{ xs: 1, md: 10 }} alignItems={{ xs: 'center', md: 'flex-start' }} justifyContent='space-between'>
-        <Box width={{xs: '100%', md: '50%'}}>
+        <Box width={{ xs: '100%', md: '50%' }}>
           <Box sx={{ width: '100%', maxHeight: '400px', aspectRatio: '4 / 3' }}>
             {
               loadingStatus === 'loading'
                 ?
-                <Skeleton width='100%' height='100%' sx={{transform: 'scale(1, 1)'}} />
+                <Skeleton width='100%' height='100%' sx={{ transform: 'scale(1, 1)' }} />
                 :
-                <img src={product.image}
+                <img src={product?.image}
                   alt=""
                   width='100%'
                   height='100%'
@@ -111,7 +115,7 @@ export default function SingleProduct() {
                 ?
                 <Skeleton />
                 :
-                product.title
+                product?.title
             }
           </Typography>
           <Typography marginBottom={2}>
@@ -120,7 +124,7 @@ export default function SingleProduct() {
                 ?
                 <Skeleton />
                 :
-                product.description
+                product?.description
             }
           </Typography>
           <Stack direction={{ xs: 'column', sm: 'row' }} width='100%' justifyContent='space-between' spacing={3}>
@@ -131,7 +135,7 @@ export default function SingleProduct() {
                     ?
                     <Skeleton />
                     :
-                    product.price + '$'
+                    product?.price + '$'
                 }
               </Typography>
             </Paper>
@@ -167,3 +171,5 @@ export default function SingleProduct() {
     </>
   )
 }
+
+export default SingleProduct;

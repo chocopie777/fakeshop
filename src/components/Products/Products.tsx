@@ -1,15 +1,18 @@
 import { Grid } from '@mui/material';
-import React, { useEffect } from 'react'
+import React, { FC, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import Product from './Product/Product';
 import { useLocalStorage } from 'hooks/useLocalStorage';
 import { cartUpdate } from 'reducers/cartSlice';
 import { selectLoadingStatus, selectProducts } from 'reducers/productsSlice';
+import { CartLocalStorage, FilterState } from 'global/types';
 
-// eslint-disable-next-line react/prop-types
-export default function Products({ filterIndex }) {
+type Props = {
+    filterIndex: FilterState,
+}
 
-    const [cart, setCart] = useLocalStorage('cartItems', []);
+const Products: FC<Props> = ({ filterIndex }) => {
+    const [cart, setCart] = useLocalStorage<CartLocalStorage>('cartItems', []);
     const loadingStatus = useSelector(selectLoadingStatus);
     let products = useSelector(selectProducts);
     products = products.slice();
@@ -40,12 +43,12 @@ export default function Products({ filterIndex }) {
                         ?
                         [...Array(8)].map((item, index) =>
                             <Product key={index}
-                                id=''
-                                title=''
-                                price=''
-                                image=''
-                                onAddInCart=''
-                                cart=''
+                                id={null}
+                                title={null}
+                                price={null}
+                                image={null}
+                                onAddInCart={null}
+                                cart={null}
                                 loading={true} />
                         )
                         :
@@ -65,3 +68,5 @@ export default function Products({ filterIndex }) {
         </>
     )
 }
+
+export default Products;

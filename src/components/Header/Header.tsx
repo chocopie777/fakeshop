@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import { AppBar, Badge, Box, Button, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemText, Toolbar, Typography, useMediaQuery, useTheme } from '@mui/material';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -9,26 +9,24 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useLocalStorage } from 'hooks/useLocalStorage';
 import { fetchCategories, selectCategories } from 'reducers/categoriesSlice';
 import { cartUpdate, selectCartItems } from 'reducers/cartSlice';
+import { CartLocalStorage } from 'global/types';
 
-export const Header = () => {
+export const Header: FC = () => {
   const dispatch = useDispatch();
-  // @ts-ignore
   const categories = useSelector(selectCategories);
-  // @ts-ignore
   const cartItems = useSelector(selectCartItems);
-  const [cart] = useLocalStorage('cartItems', []);
+  const [cart] = useLocalStorage<CartLocalStorage>('cartItems', []);
 
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState<boolean>(false);
 
   const theme = useTheme();
   const mediaQierySM = useMediaQuery(theme.breakpoints.up('sm'));
 
-  const toggleDrawer = (newOpen) => () => {
+  const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
   };
 
   useEffect(() => {
-    // @ts-ignore
     dispatch(fetchCategories());
     dispatch(cartUpdate(cart));
   }, []);

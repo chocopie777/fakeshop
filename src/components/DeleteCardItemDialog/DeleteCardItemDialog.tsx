@@ -1,10 +1,14 @@
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, IconButton, styled } from '@mui/material'
-import React from 'react'
+import React, { FC } from 'react'
 import CloseIcon from '@mui/icons-material/Close';
 
-// eslint-disable-next-line react/prop-types
-export default function DeleteCardItemDialog({ onClickDialog, openDialog, onClickDelete }) {
+type Props = {
+    onClickDialog: React.Dispatch<React.SetStateAction<boolean>>,
+    openDialog: boolean,
+    onClickDelete: () => void,
+}
 
+const DeleteCardItemDialog: FC<Props> = ({ onClickDialog, openDialog, onClickDelete }) => {
     const handleClose = () => {
         onClickDialog(false);
     };
@@ -73,3 +77,5 @@ export default function DeleteCardItemDialog({ onClickDialog, openDialog, onClic
         </>
     )
 }
+
+export default DeleteCardItemDialog;

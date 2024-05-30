@@ -1,6 +1,5 @@
-// @ts-nocheck
 import { Box, Button, Checkbox, CircularProgress, FormControlLabel, Paper, Stack, Typography } from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import CartItem from './CartItem/CartItem'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchProducts, selectLoadingStatus, selectProducts } from 'reducers/productsSlice';
@@ -12,14 +11,14 @@ import DeleteCardItemDialog from 'components/DeleteCardItemDialog/DeleteCardItem
 import ReactVisibilitySensor from 'react-visibility-sensor';
 import { cartUpdate } from 'reducers/cartSlice';
 import { checkoutSnackbarUpdate } from 'reducers/checkoutSnackbarSlice';
+import { CartItems, CartLocalStorage } from 'global/types';
 
-export default function Cart() {
-    const [cartItems, setCartItem] = useState([]);
+const Cart: FC = () => {
+    const [cartItems, setCartItem] = useState<CartItems>([]);
     const dispatch = useDispatch();
-    // @ts-ignore
     const products = useSelector(selectProducts);
     const loadingStatus = useSelector(selectLoadingStatus);
-    const [cart, setCart] = useLocalStorage('cartItems', []);
+    const [cart, setCart] = useLocalStorage<CartLocalStorage>('cartItems', []);
     const getInitState = () => {
         let checkboxStatus = true;
         for (let item of cart) {
@@ -37,7 +36,6 @@ export default function Cart() {
     const [isDisplayMobileCheckout, setIsDisplayMobileCheckout] = useState(false);
 
     useEffect(() => {
-        // @ts-ignore
         dispatch(fetchProducts());
     }, []);
 
@@ -110,7 +108,7 @@ export default function Cart() {
         setOpenDialog(false);
     }
 
-    const handleVisibilityChange = (isVisible) => {
+    const handleVisibilityChange = (isVisible: boolean) => {
         if (isVisible) {
             setIsDisplayMobileCheckout(true);
         } else {
@@ -246,3 +244,5 @@ export default function Cart() {
         </>
     )
 }
+
+export default Cart;

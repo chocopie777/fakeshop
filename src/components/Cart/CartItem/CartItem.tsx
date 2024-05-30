@@ -1,21 +1,26 @@
-/* eslint-disable react/prop-types */
 import { Box, Button, Checkbox, FormControlLabel, IconButton, Paper, Typography, useMediaQuery, useTheme } from '@mui/material'
-import React from 'react'
+import React, { FC } from 'react'
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Link } from 'react-router-dom';
 import DeleteCardItemDialog from 'components/DeleteCardItemDialog/DeleteCardItemDialog';
 import { useState } from 'react';
+import { CartItem, CartLocalStorage } from 'global/types';
 
-// eslint-disable-next-line react/prop-types
-export default function CartItem({ data, cart, onChangeCart }) {
-    const [openDialog, setOpenDialog] = useState(false);
+type Props = {
+    data: CartItem,
+    cart: CartLocalStorage,
+    onChangeCart: React.Dispatch<React.SetStateAction<CartLocalStorage>>,
+}
+
+const CartItem: FC<Props> = ({ data, cart, onChangeCart }) => {
+    const [openDialog, setOpenDialog] = useState<boolean>(false);
     const theme = useTheme();
     const mediaQuerySM = useMediaQuery(theme.breakpoints.up('sm'));
 
     const handleClickPlus = () => {
-        const nextCart = cart.map((item) => {
+        const nextCart: CartLocalStorage = cart.map((item) => {
             if (item.id === data.id) {
                 return {
                     ...item,
@@ -29,7 +34,7 @@ export default function CartItem({ data, cart, onChangeCart }) {
 
     const handleClickMinus = () => {
         let isStop = false;
-        const nextCart = cart.reduce((arr, item) => {
+        const nextCart: CartLocalStorage = cart.reduce((arr: CartLocalStorage, item) => {
             if (item.id === data.id) {
                 if (item.quantity !== 1) {
                     arr.push({
@@ -51,7 +56,7 @@ export default function CartItem({ data, cart, onChangeCart }) {
     }
 
     const handleClickDelete = () => {
-        let nextCart = cart.filter((item) => {
+        let nextCart: CartLocalStorage = cart.filter((item) => {
             return item.id !== data.id;
         })
 
@@ -66,7 +71,7 @@ export default function CartItem({ data, cart, onChangeCart }) {
     }
 
     const handleClickCheckbox = () => {
-        const nextCart = cart.map((item) => {
+        const nextCart: CartLocalStorage = cart.map((item) => {
             if (item.id === data.id) {
                 return {
                     ...item,
@@ -94,7 +99,7 @@ export default function CartItem({ data, cart, onChangeCart }) {
                 </Link>
                 <Box>
                     <Link to={'/products/' + data.id} style={{ textDecoration: 'none', color: 'inherit' }}>
-                        <Typography sx={{typography: {xs: 'body2', sm: 'h6'}, wordBreak: 'break-word'}} component='h3'>
+                        <Typography sx={{ typography: { xs: 'body2', sm: 'h6' }, wordBreak: 'break-word' }} component='h3'>
                             {data.title}
                         </Typography>
                     </Link>
@@ -141,3 +146,5 @@ export default function CartItem({ data, cart, onChangeCart }) {
         </Paper>
     )
 }
+
+export default CartItem;

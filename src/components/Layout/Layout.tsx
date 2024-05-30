@@ -2,12 +2,12 @@ import { Box, Container, useMediaQuery } from '@mui/material'
 import CheckoutSnackbar from 'components/CheckoutSnackbar/CheckoutSnackbar'
 import Footer from 'components/Footer/Footer'
 import { Header } from 'components/Header/Header'
-import React from 'react'
+import React, { FC } from 'react'
 import { Outlet } from 'react-router-dom'
 import SimpleBar from 'simplebar-react';
 import 'simplebar-react/dist/simplebar.min.css';
 
-export default function Layout() {
+const Layout: FC = () => {
     const mediaQuerySM = useMediaQuery('(min-width: 600px)');
     const simpleBarHeight = mediaQuerySM ? 'calc(100vh - 64px)' : 'calc(100vh - 48px)';
 
@@ -28,3 +28,5 @@ export default function Layout() {
         </Box>
     )
 }
+
+export default Layout;

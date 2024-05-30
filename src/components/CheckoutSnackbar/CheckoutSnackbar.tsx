@@ -1,13 +1,11 @@
 import { Alert, Snackbar } from '@mui/material';
-import React, { useEffect } from 'react'
+import React, { FC, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { checkoutSnackbarUpdate, selectIsCheckoutSnackbar } from 'reducers/checkoutSnackbarSlice';
 
-// eslint-disable-next-line react/prop-types
-export default function CheckoutSnackbar() {
-    const [open, setOpen] = React.useState(false);
+const CheckoutSnackbar: FC = () => {
+    const [open, setOpen] = React.useState<boolean>(false);
     const dispatch = useDispatch();
-    // @ts-ignore
     const isCheckoutSnackbar = useSelector(selectIsCheckoutSnackbar);
 
     useEffect(() => {
@@ -38,3 +36,5 @@ export default function CheckoutSnackbar() {
         </div>
     );
 }
+
+export default CheckoutSnackbar;
