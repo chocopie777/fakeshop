@@ -92,7 +92,8 @@ const Cart: FC = () => {
     }
 
     const handleClickCheckout = () => {
-        setCart([]);
+        const nextCart = cart.filter(item => !item.checked); 
+        setCart(nextCart);
         setIsCheckout(true);
         dispatch(checkoutSnackbarUpdate(true));
     }
