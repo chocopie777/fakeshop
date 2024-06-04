@@ -1,5 +1,5 @@
 # Магазин на React "Fake Shop"
-
+## Сайт: https://chocopie777.github.io/fakeshop/
 ### `Используемые технологии`
 
 - TypeScript
